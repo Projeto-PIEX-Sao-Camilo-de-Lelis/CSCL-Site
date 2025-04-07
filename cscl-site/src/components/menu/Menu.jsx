@@ -1,7 +1,11 @@
+import { useContext } from "react";
 import { mainColor, secondaryColor, whiteColor } from "../../config/Colors";
 import "../../index.css";
+import { UserContext } from "../../context/UserContext";
 
 export default function Menu() {
+  const { user } = useContext(UserContext);
+
   return (
     <div
       className={`flex flex-row w-full max-w-screen min-h-[15vh] justify-start items-center font-bold p-[1rem]`}
@@ -16,6 +20,14 @@ export default function Menu() {
         <h1 className="text-[1.5rem]">Casa Camilo de Lelis</h1>
       </div>
       <nav className="flex flex-row gap-[1rem] justify-center items-center">
+        {user != null && (
+          <a
+            className="hover:underline decoration-[#A61A19] underline-offset-4 cursor-pointer"
+            href="#about"
+          >
+            Gerenciar Postagens
+          </a>
+        )}
         <a
           className="hover:underline decoration-[#A61A19] underline-offset-4 cursor-pointer"
           href="#about"
