@@ -5,6 +5,7 @@ export default function Cards() {
     <div
       className="w-full h-[100vh] flex justify-center items-center"
       style={{ backgroundColor: whiteColor }}
+      id="cards"
     >
       <p className="text-black">Cards Section</p>
     </div>

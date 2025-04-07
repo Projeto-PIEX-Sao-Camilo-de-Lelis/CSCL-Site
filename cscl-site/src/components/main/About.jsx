@@ -5,6 +5,7 @@ export default function About() {
     <div
       className="w-full h-[100vh] flex justify-center items-center"
       style={{ backgroundColor: secondaryColor }}
+      id="about"
     >
       <p className="text-white text-center">About Section</p>
     </div>
