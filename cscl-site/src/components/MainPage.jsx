@@ -1,5 +1,6 @@
 import Donations from "./banners/Donations";
 import InstitutionalValues from "./banners/InstitutionalValues";
+import Footer from "./footer/Footer";
 import About from "./main/About";
 import Cards from "./main/Cards";
 import Stories from "./main/Stories";
