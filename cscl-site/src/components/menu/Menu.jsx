@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { mainColor, secondaryColor, whiteColor } from "../../config/Colors";
 import "../../index.css";
 import { UserContext } from "../../context/UserContext";
 
@@ -8,8 +7,7 @@ export default function Menu() {
 
   return (
     <div
-      className={`flex flex-row w-full max-w-screen min-h-[15vh] justify-start items-center font-bold p-[1rem]`}
-      style={{ backgroundColor: secondaryColor, color: whiteColor }}
+      className={`flex flex-row w-full max-w-screen min-h-[15vh] justify-start items-center font-bold p-[1rem] bg-secondary text-whiteColor`}
     >
       <div className="mr-auto flex flex-row gap-[1rem] justify-start items-center">
         <img
@@ -22,33 +20,32 @@ export default function Menu() {
       <nav className="flex flex-row gap-[1rem] justify-center items-center">
         {user != null && (
           <a
-            className="hover:underline decoration-[#A61A19] underline-offset-4 cursor-pointer"
+            className="hover:underline decoration-main underline-offset-4 cursor-pointer"
             href="#about"
           >
             Gerenciar Postagens
           </a>
         )}
         <a
-          className="hover:underline decoration-[#A61A19] underline-offset-4 cursor-pointer"
+          className="hover:underline decoration-main underline-offset-4 cursor-pointer"
           href="#about"
         >
           Sobre Nós
         </a>
         <a
-          className="hover:underline decoration-[#A61A19] underline-offset-4 cursor-pointer"
+          className="hover:underline decoration-main underline-offset-4 cursor-pointer"
           href="#cards"
         >
           Programas
         </a>
         <a
-          className="hover:underline decoration-[#A61A19] underline-offset-4 cursor-pointer"
+          className="hover:underline decoration-main underline-offset-4 cursor-pointer"
           href="#stories"
         >
           Nossas Histórias
         </a>
         <a
-          className={` p-[1rem] rounded-[1.2rem] cursor-pointer`}
-          style={{ backgroundColor: mainColor }}
+          className={` p-[1rem] rounded-[1.2rem] cursor-pointer bg-main`}
           href="#donations"
         >
           DOAR AGORA

@@ -2,11 +2,8 @@ import { mainColor, whiteColor } from "../../config/Colors";
 
 export default function Footer() {
   return (
-    <div
-      className="flex flex-col gap-[1rem] justify-center items-center w-full h-[33vh] text-[0.9rem]"
-      style={{ backgroundColor: mainColor, color: whiteColor }}
-    >
-      <div className="flex flex-row w-[85vw] justify-between items-center border-b-2 border-black  p-[0.7rem]">
+    <div className="flex flex-col gap-[1rem] justify-center items-center w-full h-[33vh] text-[0.9rem] bg-main">
+      <div className="flex flex-row w-[85vw] justify-between items-center border-b-2 border-secondary  p-[0.7rem]">
         <img
           src="assets/icons/logo.png"
           alt="logo da Casa São Camillo de Lelis"
@@ -18,25 +15,25 @@ export default function Footer() {
         </p>
         <nav className="flex flex-col gap-[0.4rem]">
           <a
-            className="hover:underline decoration-[#211F1F] underline-offset-4 cursor-pointer"
+            className="hover:underline decoration-secondary underline-offset-4 cursor-pointer"
             href="#about"
           >
             Sobre Nós
           </a>
           <a
-            className="hover:underline decoration-[#211F1F] underline-offset-4 cursor-pointer"
+            className="hover:underline decoration-secondary underline-offset-4 cursor-pointer"
             href="#cards"
           >
             Programas
           </a>
           <a
-            className="hover:underline decoration-[#211F1F] underline-offset-4 cursor-pointer"
+            className="hover:underline decoration-secondary underline-offset-4 cursor-pointer"
             href="#stories"
           >
             Nossas Histórias
           </a>
           <a
-            className="hover:underline decoration-[#211F1F] underline-offset-4 cursor-pointer"
+            className="hover:underline decoration-secondary underline-offset-4 cursor-pointer"
             href="#donations"
           >
             Doar Agora
