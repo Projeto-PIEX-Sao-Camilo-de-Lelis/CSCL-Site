@@ -51,6 +51,7 @@ export default function Menu() {
           DOAR AGORA
         </a>
       </nav>
+      <a className="absolute top-full end-full">Login</a>
     </div>
   );
 }

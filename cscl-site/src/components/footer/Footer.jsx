@@ -1,5 +1,3 @@
-import { mainColor, whiteColor } from "../../config/Colors";
-
 export default function Footer() {
   return (
     <div className="flex flex-col gap-[1rem] justify-center items-center w-full h-[33vh] text-[0.9rem] bg-main">

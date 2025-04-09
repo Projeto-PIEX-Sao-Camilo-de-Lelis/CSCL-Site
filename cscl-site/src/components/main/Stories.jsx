@@ -1,5 +1,3 @@
-import { secondaryColor } from "../../config/Colors";
-
 export default function Stories() {
   return (
     <div

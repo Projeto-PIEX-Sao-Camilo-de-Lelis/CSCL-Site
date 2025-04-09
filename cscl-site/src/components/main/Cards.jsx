@@ -1,5 +1,3 @@
-import { secondaryColor, whiteColor } from "../../config/Colors";
-
 export default function Cards() {
   return (
     <div
