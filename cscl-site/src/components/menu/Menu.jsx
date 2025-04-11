@@ -8,18 +8,21 @@ export default function Menu() {
 
   return (
     <div
-      className={`flex flex-row w-full max-w-screen min-h-[15vh] justify-between items-center font-bold p-[1rem] bg-secondary text-whiteColor`}
+      className={`flex items-center justify-between w-full min-h-[15vh] md:min-h-[20vh] bg-secondary text-whiteColor font-bold px-4`}
     >
-      <div className="flex flex-row gap-[0.5rem] justify-start items-center">
+      {/* Logo à esquerda */}
+      <div className="flex items-center gap-2">
         <img
-          src="assets/icons/logo2.png"
+          src="assets/icons/logo3.png"
           alt="logo da Casa São Camillo de Lelis"
-          className="w-1/5 h-1/2"
+          className="w-15 h-15 md:w-30 md:h-30 object-contain"
         />
-        <h1 className="text-[1.2rem]">Casa Camilo de Lelis</h1>
+        <h1 className="text-[1.2rem] md:text-4xl">Casa Camilo de Lelis</h1>
       </div>
-      <HamburgerMenu />
-      <nav className=" flex-row gap-[1rem] justify-center items-center hidden md:flex">
+      <div className="flex md:hidden">
+        <HamburgerMenu />
+      </div>
+      <nav className="hidden md:flex items-center gap-4 ">
         {user != null && (
           <a
             className="hover:underline decoration-main underline-offset-4 cursor-pointer"
@@ -47,18 +50,29 @@ export default function Menu() {
           Nossas Histórias
         </a>
         <a
-          className={` p-[1rem] rounded-[1.2rem] cursor-pointer bg-main`}
+          className={` p-[0.5rem] rounded-[1.2rem] cursor-pointer bg-main`}
           href="#donations"
         >
           DOAR AGORA
         </a>
+
+        {user != null && (
+          <a
+            className="hidden md:block absolute start-0 top-0 font-light text-gray-300 mr-[0.6rem] cursor-pointer"
+            dir="rtl"
+          >
+            deslogar
+          </a>
+        )}
+        {user == null && (
+          <a
+            className="hidden md:block absolute start-0 top-0 font-light text-gray-300 mr-[0.6rem] cursor-pointer"
+            dir="rtl"
+          >
+            Login
+          </a>
+        )}
       </nav>
-      <a
-        className="hidden md:block absolute start-0 top-0 font-light text-gray-300 mr-[0.5rem] cursor-pointer"
-        dir="rtl"
-      >
-        Login
-      </a>
     </div>
   );
 }
