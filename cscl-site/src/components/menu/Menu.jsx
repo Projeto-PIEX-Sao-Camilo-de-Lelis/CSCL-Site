@@ -1,23 +1,25 @@
 import { useContext } from "react";
 import "../../index.css";
 import { UserContext } from "../../context/UserContext";
+import HamburgerMenu from "./HamburgerMenu";
 
 export default function Menu() {
   const { user } = useContext(UserContext);
 
   return (
     <div
-      className={`flex flex-row w-full max-w-screen min-h-[15vh] justify-start items-center font-bold p-[1rem] bg-secondary text-whiteColor`}
+      className={`flex flex-row w-full max-w-screen min-h-[15vh] justify-between items-center font-bold p-[1rem] bg-secondary text-whiteColor`}
     >
-      <div className="mr-auto flex flex-row gap-[1rem] justify-start items-center">
+      <div className="flex flex-row gap-[0.5rem] justify-start items-center">
         <img
-          src="assets/icons/logo.png"
+          src="assets/icons/logo2.png"
           alt="logo da Casa São Camillo de Lelis"
-          className="max-w-1/5"
+          className="w-1/5 h-1/2"
         />
-        <h1 className="text-[1.5rem]">Casa Camilo de Lelis</h1>
+        <h1 className="text-[1.2rem]">Casa Camilo de Lelis</h1>
       </div>
-      <nav className="flex flex-row gap-[1rem] justify-center items-center">
+      <HamburgerMenu />
+      <nav className=" flex-row gap-[1rem] justify-center items-center hidden md:flex">
         {user != null && (
           <a
             className="hover:underline decoration-main underline-offset-4 cursor-pointer"
@@ -51,7 +53,12 @@ export default function Menu() {
           DOAR AGORA
         </a>
       </nav>
-      <a className="absolute top-full end-full">Login</a>
+      <a
+        className="hidden md:block absolute start-0 top-0 font-light text-gray-300 mr-[0.5rem] cursor-pointer"
+        dir="rtl"
+      >
+        Login
+      </a>
     </div>
   );
 }

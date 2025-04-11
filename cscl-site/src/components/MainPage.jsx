@@ -10,7 +10,7 @@ import Menu from "./menu/Menu";
 export default function MainPage() {
   return (
     <UserContextProvider>
-      <div className="flex flex-col w-full overflow-x-hidden">
+      <div className="flex flex-col w-full overflow-x-hidden md:text-4x1">
         <Menu />
         <Donations />
         <About />
