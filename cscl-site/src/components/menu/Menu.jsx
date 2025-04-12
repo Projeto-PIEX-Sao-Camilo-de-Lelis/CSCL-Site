@@ -35,6 +35,12 @@ export default function Menu() {
           className="hover:underline decoration-main underline-offset-4 cursor-pointer"
           href="#about"
         >
+          Blog
+        </a>
+        <a
+          className="hover:underline decoration-main underline-offset-4 cursor-pointer"
+          href="#about"
+        >
           Sobre Nós
         </a>
         <a
