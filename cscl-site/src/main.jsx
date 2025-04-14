@@ -1,17 +1,22 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { UserContextProvider } from "./context/UserContext";
 import "./index.css";
 import App from "./App.jsx";
 import BlogPage from "./components/BlogPage.jsx";
+import LoginPage from "./components/LoginPage.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/blog" element={<BlogPage />} />
-      </Routes>
-    </BrowserRouter>
+    <UserContextProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </BrowserRouter>
+    </UserContextProvider>
   </StrictMode>
 );
