@@ -16,12 +16,9 @@ export default async function login(email, password) {
             password,
         });
 
-        if (response.status !== 200) {
-            throw new Error(`Erro na requisição: ${response.status}`);
-        }
- 
         return {
             token: response.data.token,
+            data: response.data,
         };
     } catch (error) {
         console.error(`Erro ao fazer login: ${error}`);

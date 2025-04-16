@@ -9,14 +9,30 @@ import Menu from "./menu/Menu";
 export default function LoginPage(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [erros, setErros] = useState();
     const { authContext } = useContext(UserContext);
 
     async function handleLogin(){
-        const token = await login(email, password);
-        
-        if(token){
-            authContext(token);
+        try{
+            if(!email || !password){
+                setErros("E-mail e senha são de preenchimento obrigatório.");
+                return;
+            }
+
+            const data = await login(email, password);
+  
+            
+            console.log(data.token);
+            
+            
+            if(data.token){
+                authContext(data.token);
+            }
+        }catch(err){
+
+            setErros("Erro ao fazer login, verifique seu email e senha.");
         }
+
     }
 
     return(
@@ -29,6 +45,9 @@ export default function LoginPage(){
                         <Field type = "email" placeholder="Digite seu login" onChange={(e) => setEmail(e.target.value)}/>
                         <span className="text-[1rem] text-whiteColor">Senha</span>
                         <Field type = "password" placeholder="Digite sua senha" onChange={(e) => setPassword(e.target.value)}/>
+                        <div>
+                            <span className="text-[1rem] text-red-600">{erros}</span>
+                        </div>
                     </div>
                     <div className="mt-4">
                         <button

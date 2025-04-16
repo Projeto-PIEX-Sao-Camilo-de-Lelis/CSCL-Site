@@ -5,13 +5,11 @@ import { BrowserRouter } from "react-router-dom";
 
 function App() {
     return (
-        <BrowserRouter>
             <UserContextProvider>
                 <div className="overflow-x-hidden">
                     <MainPage />
                 </div>
             </UserContextProvider>
-        </BrowserRouter>
     );
 }
 
