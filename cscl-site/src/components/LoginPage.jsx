@@ -5,6 +5,7 @@ import login from "../services/authService";
 import Footer from "./footer/Footer";
 import Field from "./input/Field";
 import Menu from "./menu/Menu";
+import { validateEmail } from "../utils/emailValidator";
 
 
 export default function LoginPage(){
@@ -20,6 +21,13 @@ export default function LoginPage(){
                 setErros("E-mail e senha são de preenchimento obrigatório.");
                 return;
             }
+
+            if(!validateEmail(email)){
+                setErros("Por favor, insira um e-mail válido.");
+                return;
+            }
+
+            setErros("");
 
             const userData = await login(email, password);    
                

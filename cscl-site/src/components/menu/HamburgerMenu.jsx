@@ -1,10 +1,12 @@
 import React, { useContext, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { UserContext } from "../../context/UserContext";
+import {useNavigate} from "react-router-dom";
 
 export default function HamburgerMenu() {
-  const { user } = useContext(UserContext);
+  const { user, logout } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -57,7 +59,7 @@ export default function HamburgerMenu() {
             {user != null && (
               <a
                 className=" font-light text-gray-300 mr-[0.5rem] cursor-pointer"
-                dir="rtl"
+                dir="rtl" onClick={logout}
               >
                 Deslogar
               </a>
@@ -65,7 +67,9 @@ export default function HamburgerMenu() {
             {user == null && (
               <a
                 className=" font-light text-gray-300 mr-[0.5rem] cursor-pointer"
-                dir="rtl"
+                dir="rtl" onClick={()=>{
+                  navigate("/login")
+                }}
               >
                 Login
               </a>

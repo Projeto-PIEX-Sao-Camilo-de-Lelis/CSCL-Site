@@ -8,16 +8,16 @@ const PostList = () => {
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 5;
-    const {user} = useContext(UserContext);
+    //const {user} = useContext(UserContext);
 
     const fetchPosts = async (page) => {
         setLoading(true);
         try {               
-                if(user && user.token){
-                const response = await getPosts(user.token, page, pageSize);
+                //if(user && user.token){
+                const response = await getPosts( page, pageSize);
                 setPostsData(response);
                 setLoading(false);
-            }
+           // }
         } catch (error) {
             setError("Ocorreu um erro ao buscar os posts");
             setLoading(false);
@@ -26,7 +26,7 @@ const PostList = () => {
 
     useEffect(() => {
         fetchPosts(currentPage);
-    }, [currentPage, user]);
+    }, [currentPage]);
 
     const handlePreviousPage = () => {
         if (currentPage > 1) {
