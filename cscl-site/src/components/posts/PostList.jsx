@@ -41,7 +41,7 @@ const PostList = () => {
     };
 
     return (
-        <div className="space-y-10">
+        <div className="flex items-center justify-center flex-col">
             <div className="space-y-10 pb-8">
                 {loading && <p>Carregando posts...</p>}
                 {error && <p className="text-red-500">{error}</p>}
