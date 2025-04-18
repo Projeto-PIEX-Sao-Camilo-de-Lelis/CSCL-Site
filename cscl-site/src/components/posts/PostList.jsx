@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getPosts } from "../../services/postService.js";
+import { UserContext } from "../../context/UserContext.jsx";
 
 const PostList = () => {
     const [postsData, setPostsData] = useState({ posts: [], totalPages: 1 });
@@ -7,13 +8,16 @@ const PostList = () => {
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 5;
+    const {user} = useContext(UserContext);
 
     const fetchPosts = async (page) => {
         setLoading(true);
-        try {
-            const response = await getPosts(page, pageSize);
-            setPostsData(response);
-            setLoading(false);
+        try {               
+                if(user && user.token){
+                const response = await getPosts(user.token, page, pageSize);
+                setPostsData(response);
+                setLoading(false);
+            }
         } catch (error) {
             setError("Ocorreu um erro ao buscar os posts");
             setLoading(false);
@@ -22,7 +26,7 @@ const PostList = () => {
 
     useEffect(() => {
         fetchPosts(currentPage);
-    }, [currentPage]);
+    }, [currentPage, user]);
 
     const handlePreviousPage = () => {
         if (currentPage > 1) {

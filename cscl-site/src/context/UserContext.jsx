@@ -1,29 +1,31 @@
 import { createContext, useState } from "react";
-import login from "../services/authService";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
-    const [token, setToken] = useState(null);
     const [user, setUser] = useState(null);
+    const navigate = useNavigate();
 
-    async function authContext(token) {
+    async function authContext(userData) {
         try {
-            setToken(token);
-            
-            return token;
+            if(userData){
+                setUser(userData);
+                return userData;
+            }
+            return null;
         } catch (error) {
             throw error;
         }
     }
 
     function logout() {
-        setToken(null);
         setUser(null);
+        navigate('/')
     }
 
     return (
-        <UserContext.Provider value={{ token, user, setToken, authContext, logout }}>
+        <UserContext.Provider value={{ user, authContext, logout }}>
             {children}
         </UserContext.Provider>
     );

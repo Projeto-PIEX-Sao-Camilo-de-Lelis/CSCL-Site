@@ -9,14 +9,14 @@ import LoginPage from "./components/LoginPage.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <UserContextProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+        <UserContextProvider>
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/login" element={<LoginPage />} />
         </Routes>
+        </UserContextProvider>
       </BrowserRouter>
-    </UserContextProvider>
   </StrictMode>
 );

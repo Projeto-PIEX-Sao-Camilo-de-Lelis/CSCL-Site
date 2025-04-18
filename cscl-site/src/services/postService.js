@@ -10,13 +10,16 @@ const postApi = axios.create({
     },
 });
 
-export const getPosts = async (page = 1, pageSize = 5) => {
+export const getPosts = async (token, page = 1, pageSize = 5) => {
     try {
         const response = await postApi.get("/posts", {
+            headers:{
+                Authorization: `Bearer ${token}`,
+            },
             params: {
                 pageNumber: page,
                 pageSize: pageSize
-            },
+            },  
         });
 
         if (response.status !== 200) {

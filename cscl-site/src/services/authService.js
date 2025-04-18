@@ -1,5 +1,6 @@
 import axios from "axios";
 import config from "../utils/config";
+import {jwtDecode} from "jwt-decode";
 
 const postApi = axios.create({
     baseURL: config.apiUrl,
@@ -14,12 +15,19 @@ export default async function login(email, password) {
         const response = await postApi.post("/auth/login", {
             email,
             password,
-        });
+        });    
 
-        return {
-            token: response.data.token,
-            data: response.data,
-        };
+        if(response.data.token){                        
+            const decodedToken = jwtDecode(response.data.token);
+
+            const {userId, username, role} = decodedToken;
+            const userData = {userId, username, role, token: response.data.token};
+
+            return userData;      
+        }
+
+
+        return null;
     } catch (error) {
         console.error(`Erro ao fazer login: ${error}`);
         throw error;

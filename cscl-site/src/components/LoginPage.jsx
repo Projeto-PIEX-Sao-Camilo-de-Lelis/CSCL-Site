@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
-import { UserContext, UserContextProvider } from "../context/UserContext";
+import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 import login from "../services/authService";
 import Footer from "./footer/Footer";
 import Field from "./input/Field";
@@ -7,6 +8,7 @@ import Menu from "./menu/Menu";
 
 
 export default function LoginPage(){
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [erros, setErros] = useState();
@@ -19,14 +21,13 @@ export default function LoginPage(){
                 return;
             }
 
-            const data = await login(email, password);
-  
+            const userData = await login(email, password);    
+               
             
-            console.log(data.token);
-            
-            
-            if(data.token){
-                authContext(data.token);
+            if(userData){                           
+                await authContext(userData);    
+                                
+                navigate('/blog');            
             }
         }catch(err){
 
@@ -36,18 +37,20 @@ export default function LoginPage(){
     }
 
     return(
-        <UserContextProvider>
             <div className="flex flex-col justify-between items-center bg-secondary w-screen h-screen">
+                <div className="w-screen border-b border-red-600">
                 <Menu/>
-                <div className = "flex flex-col justify-center items-center w-[300px] h-[300px] border-b rounded-2xl border-red-600 bg-gradient-to-r from-black via-gray-950 via-red-950 to-black md:w-2xl min-h-[35vh]">
-                    <div className="flex flex-col justify-center items-center w-[285px] md:w-[400px] bg-transparent">
-                        <span className="text-[1rem] text-whiteColor">Login</span>
+                </div>
+
+                <div className = "flex flex-col justify-center items-center min-w-[65vw] min-h-[40vh] border-b rounded-2xl border-red-600 bg-gradient-to-r from-black via-gray-950 via-red-950 to-black md:min-w-[30vw]">
+                    <div className="flex flex-col justify-center items-center min-w-[60vw] bg-orange md:min-w-[28vw]">
+                        <span className="text-[1rem] text-whiteColor md:text-[1.5rem]">Login</span>
                         <Field type = "email" placeholder="Digite seu login" onChange={(e) => setEmail(e.target.value)}/>
-                        <span className="text-[1rem] text-whiteColor">Senha</span>
+                        <span className="text-[1rem] text-whiteColor md:text-[1.5rem]">Senha</span>
                         <Field type = "password" placeholder="Digite sua senha" onChange={(e) => setPassword(e.target.value)}/>
-                        <div>
-                            <span className="text-[1rem] text-red-600">{erros}</span>
-                        </div>
+                    </div>
+                    <div className="p-2">
+                            <span className="text-[0.8rem] text-red-600">{erros}</span>
                     </div>
                     <div className="mt-4">
                         <button
@@ -61,6 +64,5 @@ export default function LoginPage(){
                 </div>
             <Footer/>
             </div>
-        </UserContextProvider>
     )
 }

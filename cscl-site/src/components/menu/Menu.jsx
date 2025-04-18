@@ -2,9 +2,11 @@ import { useContext } from "react";
 import "../../index.css";
 import { UserContext } from "../../context/UserContext";
 import HamburgerMenu from "./HamburgerMenu";
+import { useNavigate } from "react-router-dom";
 
 export default function Menu() {
-  const { user } = useContext(UserContext);
+  const { user, logout } = useContext(UserContext);
+  const navigate = useNavigate();
 
   return (
     <div
@@ -65,7 +67,7 @@ export default function Menu() {
         {user != null && (
           <a
             className="hidden md:block absolute start-0 top-0 font-light text-gray-300 mr-[0.6rem] cursor-pointer"
-            dir="rtl"
+            dir="rtl" onClick={logout}
           >
             deslogar
           </a>
@@ -73,7 +75,9 @@ export default function Menu() {
         {user == null && (
           <a
             className="hidden md:block absolute start-0 top-0 font-light text-gray-300 mr-[0.6rem] cursor-pointer"
-            dir="rtl"
+            dir="rtl" onClick={()=>{
+              navigate("/login")
+            }}
           >
             Login
           </a>
