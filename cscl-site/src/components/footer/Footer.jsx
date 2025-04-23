@@ -7,7 +7,7 @@ export default function Footer() {
           alt="logo da Casa São Camillo de Lelis"
           className="w-[8rem]"
         />
-        <p>
+        <p className=" hidden sm:block">
           Nosso compromisso é oferecer acolhimento integral às pessoas em
           situação de rua, promovendo dignidade e cidadania por meio de ações.
         </p>

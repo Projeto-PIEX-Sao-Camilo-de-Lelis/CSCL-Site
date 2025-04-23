@@ -1,4 +1,3 @@
-import { UserContextProvider } from "../context/UserContext";
 import Donations from "./banners/Donations";
 import InstitutionalValues from "./banners/InstitutionalValues";
 import Footer from "./footer/Footer";
@@ -9,7 +8,6 @@ import Menu from "./menu/Menu";
 
 export default function MainPage() {
   return (
-    <UserContextProvider>
       <div className="flex flex-col w-full overflow-x-hidden md:text-2x1">
         <Menu />
         <Donations />
@@ -19,6 +17,5 @@ export default function MainPage() {
         <Stories />
         <Footer />
       </div>
-    </UserContextProvider>
   );
 }

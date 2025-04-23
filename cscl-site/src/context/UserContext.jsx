@@ -1,26 +1,34 @@
 import { createContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
+    const navigate = useNavigate();
 
-  async function login(email, password) {
-    setUser({
-      id: 1,
-      name: "Romeu",
-    });
-  }
+    async function authContext(userData) {
+        try {
+            if(userData){
+                setUser(userData);
+                return userData;
+            }
+            return null;
+        } catch (error) {
+            throw error;
+        }
+    }
 
-  function logout() {
-    setUser(null);
-  }
+    function logout() {
+        setUser(null);
+        navigate('/')
+    }
 
-  return (
-    <UserContext.Provider value={{ user, login, logout }}>
-      {children}
-    </UserContext.Provider>
-  );
+    return (
+        <UserContext.Provider value={{ user, authContext, logout }}>
+            {children}
+        </UserContext.Provider>
+    );
 };
 
 export { UserContext };
