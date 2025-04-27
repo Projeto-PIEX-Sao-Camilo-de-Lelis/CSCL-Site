@@ -12,12 +12,12 @@ const PostList = () => {
 
     const fetchPosts = async (page) => {
         setLoading(true);
-        try {               
-                //if(user && user.token){
-                const response = await getPosts( page, pageSize);
-                setPostsData(response);
-                setLoading(false);
-           // }
+        try {
+            //if(user && user.token){
+            const response = await getPosts(page, pageSize);
+            setPostsData(response);
+            setLoading(false);
+            // }
         } catch (error) {
             setError("Ocorreu um erro ao buscar os posts");
             setLoading(false);
@@ -70,26 +70,30 @@ const PostList = () => {
             </div>
 
 
-            <div className="flex justify-center items-center space-x-4">
-                <button
-                    onClick={handlePreviousPage}
-                    disabled={currentPage === 1}
-                    className={`px-4 py-2 rounded-2xl bg-main text-white ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-red-700"
-                        }`}
-                >
-                    Anterior
-                </button>
-                <span className="text-white">
-                    Página {currentPage} de {postsData.totalPages}
-                </span>
-                <button
-                    onClick={handleNextPage}
-                    disabled={currentPage === postsData.totalPages}
-                    className={`px-4 py-2 rounded-2xl bg-main text-white ${currentPage === postsData.totalPages ? "opacity-50 cursor-not-allowed" : "hover:bg-red-700"
-                        }`}
-                >
-                    Próxima
-                </button>
+            <div className="flex flex-col justify-center items-center">
+                <div className="mb-5">
+                    <span className="text-white">
+                        Página {currentPage} de {postsData.totalPages}
+                    </span>
+                </div>
+                <div className="flex items-center justify-center space-x-4">
+                    <button
+                        onClick={handlePreviousPage}
+                        disabled={currentPage === 1}
+                        className={`px-4 py-2 rounded-2xl bg-main text-white ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-red-700"
+                            }`}
+                    >
+                        Anterior
+                    </button>
+                    <button
+                        onClick={handleNextPage}
+                        disabled={currentPage === postsData.totalPages}
+                        className={`px-4 py-2 rounded-2xl bg-main text-white ${currentPage === postsData.totalPages ? "opacity-50 cursor-not-allowed" : "hover:bg-red-700"
+                            }`}
+                    >
+                        Próxima
+                    </button>
+                </div>
             </div>
         </div>
     );
