@@ -7,18 +7,20 @@ import App from "./App.jsx";
 import BlogPage from "./components/BlogPage.jsx";
 import LoginPage from "./components/LoginPage.jsx";
 import DashBoardPage from "./components/DashBoardPage.jsx";
+import CreatePostPage from "./components/CreatePostPage.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-        <UserContextProvider>
+      <UserContextProvider>
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<DashBoardPage />} />
+          <Route path="/create-post" element={<CreatePostPage />} />
         </Routes>
-        </UserContextProvider>
-      </BrowserRouter>
+      </UserContextProvider>
+    </BrowserRouter>
   </StrictMode>
 );
