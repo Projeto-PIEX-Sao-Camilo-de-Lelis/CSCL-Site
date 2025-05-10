@@ -1,5 +1,6 @@
 import Footer from "./footer/Footer";
 import Menu from "./menu/Menu";
+import TipTapEditor from "./tiptap/TipTapEditor";
 
 export default function CreatePostPage() {
     return (
@@ -18,11 +19,9 @@ export default function CreatePostPage() {
                 />
 
                 <label className="text-white text-[1.5rem] mb-4">Conteúdo</label>
-                <textarea
-                    className="w-full h-[200px] text-white text-[1.2rem] p-3 rounded-lg mb-6 border border-white bg-transparent"
-                    placeholder="Digite o conteúdo do post"
-                    onChange={(e) => setContent(e.target.value)}
-                ></textarea>
+                <div className="w-full h-[300px] mb-6">
+                    <TipTapEditor />
+                </div>
 
                 <button className="px-6 py-3 bg-main text-white text-[1.2rem] rounded-lg hover:bg-red-700 transition duration-300">
                     Postar
