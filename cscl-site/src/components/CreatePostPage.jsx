@@ -1,8 +1,42 @@
 import Footer from "./footer/Footer";
 import Menu from "./menu/Menu";
 import TipTapEditor from "./tiptap/TipTapEditor";
+import { createBlogPost } from "../services/postService";
+import { useState, useContext } from "react";
+import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 export default function CreatePostPage() {
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+    const { user } = useContext(UserContext);
+    const navigate = useNavigate();
+
+    const handleSubmit = async () => {
+        try {
+            if (!user || !user.token) {
+                alert("Você precisa estar logado para criar um post.");
+                return;
+            }
+
+            if (!title || !content) {
+                alert("Título e conteúdo são obrigatórios.");
+                return;
+            }
+
+            const postData = {
+                title,
+                content
+            };
+
+            await createBlogPost(user.token, postData);
+            alert("Post criado com sucesso!");
+            navigate("/dashboard");
+        } catch (error) {
+            console.error("Erro ao criar post:", error);
+        }
+    };
+
     return (
         <div className="flex flex-col w-full min-w-[65vw] min-h-[40vh] overflow-x-hidden justify-center items-center bg-secondary ">
             <Menu />
@@ -16,16 +50,21 @@ export default function CreatePostPage() {
                     className="w-full h-[50px] text-white text-[1.2rem] p-3 rounded-lg mb-6 border border-white bg-transparent"
                     type="text"
                     placeholder="Digite o título do post"
+                    onChange={(e) => setTitle(e.target.value)}
                 />
 
                 <label className="text-white text-[1.5rem] mb-4">Conteúdo</label>
-                <div className="w-full h-[300px] mb-6">
-                    <TipTapEditor />
+                <div className="w-full h-[70vh] mb-6">
+                    <TipTapEditor content={content} onChange={setContent}/>
                 </div>
-
-                <button className="px-6 py-3 bg-main text-white text-[1.2rem] rounded-lg hover:bg-red-700 transition duration-300">
-                    Postar
-                </button>
+                <div>
+                    <button 
+                        onClick={handleSubmit} 
+                        className="px-6 py-3 bg-main text-white text-[1.2rem] rounded-lg hover:bg-red-700 transition duration-300 mt-5"
+                    >
+                        Postar
+                    </button>
+                </div>
             </div>
 
             <Footer />

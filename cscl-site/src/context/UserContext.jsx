@@ -1,15 +1,27 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext();
 
 export const UserContextProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(() => {
+        const savedUser = localStorage.getItem("user");
+        return savedUser ? JSON.parse(savedUser) : null;
+    });
+    
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user) {
+            localStorage.setItem("user", JSON.stringify(user));
+        } else {
+            localStorage.removeItem("user");
+        }
+    }, [user]);
 
     async function authContext(userData) {
         try {
-            if(userData){
+            if (userData) {
                 setUser(userData);
                 return userData;
             }
@@ -21,7 +33,8 @@ export const UserContextProvider = ({ children }) => {
 
     function logout() {
         setUser(null);
-        navigate('/')
+        localStorage.removeItem("user");
+        navigate('/');
     }
 
     return (

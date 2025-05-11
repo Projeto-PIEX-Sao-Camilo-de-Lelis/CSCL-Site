@@ -43,5 +43,46 @@ export const getPost = async (slug) => {
     return response.data;
 }
 
+export const uploadImage = async (token, file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+        const response = await postApi.post("/images/upload", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (response.status !== 200) {
+            throw new Error(`Erro ao fazer upload da imagem: ${response.status}`);
+        }
+
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao fazer upload da imagem: ${error}`);
+        throw error;
+    }
+}
 
 
+    export const createBlogPost = async (token, postData) => {
+    try {
+        const response = await postApi.post("/posts", postData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (response.status !== 201) {
+            throw new Error(`Erro ao criar post: ${response.status}`);
+        }
+
+        return response.data;
+    } catch (error) {
+        console.error(`Erro ao criar post: ${error}`);
+        throw error;
+    }
+
+    }

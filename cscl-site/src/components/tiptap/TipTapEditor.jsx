@@ -18,6 +18,8 @@ import TableRow from "@tiptap/extension-table-row";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import axios from "axios";
+import React, { useEffect, useContext } from 'react';
+import { UserContext } from "../../context/UserContext"; 
 import {
   Bold,
   Italic,
@@ -40,23 +42,29 @@ import {
   Palette,
   Link as LinkIcon,
 } from "lucide-react";
+import { uploadImage } from "../../services/postService";
 
 const MenuBar = ({ editor }) => {
   if (!editor) return null;
+  const { user } = useContext(UserContext);
 
-  const addImage = async () => {
+  const addImage = async () => {  
     const input = document.createElement("input");
     input.setAttribute("type", "file");
     input.setAttribute("accept", "image/*");
     input.click();
-
+    
     input.onchange = async () => {
       if (input.files?.length) {
         try {
-          const imageUrl = await uploadImageToCloudinary(input.files[0]);
-          editor.chain().focus().setImage({ src: imageUrl }).run();
+          const imageUrl = await uploadImage(user.token, input.files[0]);
+          
+          const finalUrl = typeof imageUrl === 'string' ? imageUrl : imageUrl.url || imageUrl.imageUrl;
+                  
+          editor.chain().focus().setImage({ src: finalUrl }).run();
         } catch (error) {
-          console.error("Erro ao enviar imagem para Cloudinary", error);
+          console.error("Erro ao enviar imagem:", error);
+          alert("Ocorreu um erro ao processar a imagem. Por favor, tente novamente.");
         }
       }
     };
@@ -86,6 +94,7 @@ const MenuBar = ({ editor }) => {
   const ColorButton = () => (
     <input
       type="color"
+      value="#FFFFFF"
       onChange={(e) => editor.chain().focus().setColor(e.target.value).run()}
       className="w-8 h-8 p-0 bg-transparent border-none cursor-pointer"
       title="Escolher cor"
@@ -93,7 +102,7 @@ const MenuBar = ({ editor }) => {
   );
 
   return (
-    <div className="border border-gray-600 rounded-t-md p-2 bg-gray-800 flex flex-wrap gap-2">
+    <div className="border border-white rounded-t-md p-2 bg-[#272525] flex flex-wrap gap-2">
       {/* Texto e Parágrafos */}
       <div className="flex gap-2">
         <MenuButton
@@ -284,17 +293,29 @@ const TipTapEditor = ({ content, onChange }) => {
     ],
     content,
     onUpdate: ({ editor }) => {
-      const rawHTML = editor.getHTML();
-      const normalizedHTML = rawHTML.replace(/&nbsp;/g, " ");
-      onChange(normalizedHTML);
+      if (onChange) {
+        const rawHTML = editor.getHTML();
+        const normalizedHTML = rawHTML.replace(/&nbsp;/g, " ");
+        onChange(normalizedHTML);
+      }
     },
   });
+  
+  useEffect(() => {
+    if (editor) {
+      editor.chain().focus().setColor('#FFFFFF').run();
+    }
+  }, [editor]);
 
   return (
-    <div className="border border-gray-600 rounded-md overflow-hidden">
-      <MenuBar editor={editor} />
-      <div className="min-h-[360px] bg-gray-800">
-        <EditorContent editor={editor} className="prose prose-invert max-w-7xl h-full" />
+    <div className="border border-white rounded-md overflow-hidden flex flex-col">
+      {/* Aplicando position sticky ao MenuBar */}
+      <div className="sticky top-0 z-10">
+        <MenuBar editor={editor} />
+      </div>
+      
+      <div className="min-h-[360px] bg-[#272525] overflow-y-auto">
+        <EditorContent editor={editor} className="prose prose-invert max-w-7xl h-[60vh]" />
         <style jsx global>{`
           .ProseMirror {
             min-height: 360px;
@@ -314,7 +335,7 @@ const TipTapEditor = ({ content, onChange }) => {
             height: 0;
             pointer-events: none;
           }
-        `}</style>
+        `}</style>  
       </div>
     </div>
   );
