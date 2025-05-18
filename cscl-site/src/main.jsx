@@ -8,6 +8,7 @@ import BlogPage from "./components/BlogPage.jsx";
 import LoginPage from "./components/LoginPage.jsx";
 import DashBoardPage from "./components/DashBoardPage.jsx";
 import CreatePostPage from "./components/CreatePostPage.jsx";
+import ViewPostPage from "./components/ViewPostPage.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -19,6 +20,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<DashBoardPage />} />
           <Route path="/create-post" element={<CreatePostPage />} />
+          <Route path="/view-post" element={<ViewPostPage />} />
         </Routes>
       </UserContextProvider>
     </BrowserRouter>
