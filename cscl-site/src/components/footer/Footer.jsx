@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <div className="flex flex-col gap-[1rem] justify-center items-center w-full h-[25vh] text-[0.9rem] bg-main text-whiteColor">
+    <div className="flex flex-col gap-[1rem] justify-center items-center w-full min-h-[25vh] text-[0.9rem] bg-main text-whiteColor">
       <div className="flex flex-row w-[85vw] justify-between items-center border-b-2 border-secondary  p-[0.7rem]">
         <img
           src="assets/icons/logo.png"
@@ -39,7 +39,7 @@ export default function Footer() {
         </nav>
       </div>
       <div>
-        <p>teste</p>
+        <p>2024@Desenvolvido por alunos do Instituto Vianna Júnior</p>
       </div>
     </div>
   );

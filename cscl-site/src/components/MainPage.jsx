@@ -8,14 +8,14 @@ import Menu from "./menu/Menu";
 
 export default function MainPage() {
   return (
-      <div className="flex flex-col w-full overflow-x-hidden md:text-2x1">
-        <Menu />
-        <Donations />
-        <About />
-        <InstitutionalValues />
-        <Cards />
-        <Stories />
-        <Footer />
-      </div>
+    <div className="flex flex-col w-full h-full overflow-x-hidden md:text-2x1 overflow-hidden">
+      <Menu />
+      <Donations />
+      <About />
+      <InstitutionalValues />
+      <Cards />
+      <Stories />
+      <Footer />
+    </div>
   );
 }
