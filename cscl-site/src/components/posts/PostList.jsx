@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { getPosts } from "../../services/postService.js";
 import { UserContext } from "../../context/UserContext.jsx";
+import { Link } from "react-router-dom";
 
 const PostList = () => {
     const [postsData, setPostsData] = useState({ posts: [], totalPages: 1 });
@@ -14,9 +15,13 @@ const PostList = () => {
         setLoading(true);
         try {
             //if(user && user.token){
+            console.log(page);
+
             const response = await getPosts(page, pageSize);
             setPostsData(response);
             setLoading(false);
+            console.log(response);
+
             // }
         } catch (error) {
             setError("Ocorreu um erro ao buscar os posts");
@@ -26,17 +31,19 @@ const PostList = () => {
 
     useEffect(() => {
         fetchPosts(currentPage);
+        console.log(currentPage);
+
     }, [currentPage]);
 
     const handlePreviousPage = () => {
         if (currentPage > 1) {
-            setCurrentPage((prevPage) => prevPage - 1);
+            setCurrentPage(prev => prev - 1);
         }
     };
 
     const handleNextPage = () => {
         if (currentPage < postsData.totalPages) {
-            setCurrentPage((prevPage) => prevPage + 1);
+            setCurrentPage(prev => prev + 1);
         }
     };
 
@@ -54,7 +61,7 @@ const PostList = () => {
                     >
                         <div className="flex flex-col justify-center items-start p-4">
                             <h2 className="sm:text-2xl sm:font-light md:text-3xl md:font-bold text-gray-100 hover:text-red-500 transition duration-300">
-                                <a href={`/blog/${post.slug}`}>{post.title}</a>
+                                <Link to={`/blog/${post.slug}`}>{post.title}</Link>
                             </h2>
                             <h3 className="sm:text-xs sm:font-light md:text-sm md:font-normal text-gray-500 mt-2 line-clamp-3">{post.contentPreview}</h3>
                             <div className="sm:text-xs sm:font-light md:text-sm md:font-normal text-gray-500 mt-4 absolute bottom-3">

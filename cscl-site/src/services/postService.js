@@ -10,17 +10,11 @@ const postApi = axios.create({
     },
 });
 
-export const getPosts = async (token, page = 1, pageSize = 5) => {
+export const getPost = async (slug) => {
     try {
-        const response = await postApi.get("/posts", {
-            headers:{
-                Authorization: `Bearer ${token}`,
-            },
-            params: {
-                pageNumber: page,
-                pageSize: pageSize
-            },  
-        });
+        const response = await postApi.get(`/posts/slug/${slug}`);
+        console.log(response);
+
 
         if (response.status !== 200) {
             throw new Error(`Erro na requisição: ${response.status}`);
@@ -34,11 +28,17 @@ export const getPosts = async (token, page = 1, pageSize = 5) => {
     }
 }
 
-export const getPost = async (slug) => {
-    const response = await postApi.get(`/posts/slug/${slug}`);
+export const getPosts = async (page = 1, pageSize = 5) => {
+    const response = await postApi.get("/posts", {
+        params: {
+            pageNumber: page,
+            pageSize: pageSize
+        }
+    })
+
 
     if (response.status !== 200) {
-        throw new Error(`Erro ao buscar post: ${response.status}`);
+        throw new Error(`Erro ao buscar posts: ${response.status}`);
     }
     return response.data;
 }
@@ -67,7 +67,7 @@ export const uploadImage = async (token, file) => {
 }
 
 
-    export const createBlogPost = async (token, postData) => {
+export const createBlogPost = async (token, postData) => {
     try {
         const response = await postApi.post("/posts", postData, {
             headers: {
@@ -85,4 +85,4 @@ export const uploadImage = async (token, file) => {
         throw error;
     }
 
-    }
+}
