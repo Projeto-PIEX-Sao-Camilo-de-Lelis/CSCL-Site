@@ -49,16 +49,20 @@ export default function ViewPostPage() {
       <div className="flex flex-col w-full justify-center items-center font-bold p-[1rem] bg-gradient-to-r from-black via-red-900 to-red-400 text-whiteColor relative">
         <h1 className="text-center w-full text-2xl m-7">Post</h1>
       </div>
+
+      <div className="self-start ml-4 mt-4">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex text-whiteflex gap-2 text-white hover:text-main transition"
+          className="flex gap-2 text-white hover:text-main transition"
+        >
+          <ArrowLeft className="mr-2" />
+        </button>
+      </div>
+
       <div className="flex flex-col items-center w-full flex-1">
-        <div className="flex flex-col justify-start items-center w-full max-w-[900px] h-[90vh] bg-[#272525] p-4 md:p-10 rounded-2xl shadow-lg mt-8 mb-8 overflow-y-auto">
-          <div className="self-start mb-4">
-            <button
-              onClick={() => navigate(-1)}
-              className="flex gap-2 text-white hover:text-main transition"
-            >
-              <ArrowLeft className="mr-2" />
-            </button>
-          </div>
+        <div className="flex flex-col justify-start items-center w-full max-w-[900px] bg-[#272525] p-4 md:p-10 rounded-2xl shadow-lg mt-8 mb-8">
+
           {loading ? (
             <span className="text-white">Carregando...</span>
           ) : post ? (
