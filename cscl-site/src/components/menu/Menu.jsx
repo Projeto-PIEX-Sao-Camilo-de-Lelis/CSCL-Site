@@ -15,7 +15,7 @@ export default function Menu() {
       {/* Logo à esquerda */}
       <div className="flex items-center gap-2">
         <img
-          src="assets/icons/logo3.png"
+          src="/assets/icons/logo3.png"
           alt="logo da Casa São Camillo de Lelis"
           className="w-15 h-15 md:w-30 md:h-30 object-contain"
         />
@@ -67,7 +67,8 @@ export default function Menu() {
         {user != null && (
           <a
             className="hidden md:block absolute start-0 top-0 font-light text-gray-300 mr-[0.6rem] cursor-pointer"
-            dir="rtl" onClick={logout}
+            dir="rtl"
+            onClick={logout}
           >
             deslogar
           </a>
@@ -75,8 +76,9 @@ export default function Menu() {
         {user == null && (
           <a
             className="hidden md:block absolute start-0 top-0 font-light text-gray-300 mr-[0.6rem] cursor-pointer"
-            dir="rtl" onClick={()=>{
-              navigate("/login")
+            dir="rtl"
+            onClick={() => {
+              navigate("/login");
             }}
           >
             Login
