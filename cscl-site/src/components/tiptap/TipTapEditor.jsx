@@ -18,8 +18,8 @@ import TableRow from "@tiptap/extension-table-row";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import axios from "axios";
-import React, { useEffect, useContext } from 'react';
-import { UserContext } from "../../context/UserContext"; 
+import React, { useEffect, useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 import {
   Bold,
   Italic,
@@ -48,23 +48,28 @@ const MenuBar = ({ editor }) => {
   if (!editor) return null;
   const { user } = useContext(UserContext);
 
-  const addImage = async () => {  
+  const addImage = async () => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
     input.setAttribute("accept", "image/*");
     input.click();
-    
+
     input.onchange = async () => {
       if (input.files?.length) {
         try {
           const imageUrl = await uploadImage(user.token, input.files[0]);
-          
-          const finalUrl = typeof imageUrl === 'string' ? imageUrl : imageUrl.url || imageUrl.imageUrl;
-                  
+
+          const finalUrl =
+            typeof imageUrl === "string"
+              ? imageUrl
+              : imageUrl.url || imageUrl.imageUrl;
+
           editor.chain().focus().setImage({ src: finalUrl }).run();
         } catch (error) {
           console.error("Erro ao enviar imagem:", error);
-          alert("Ocorreu um erro ao processar a imagem. Por favor, tente novamente.");
+          alert(
+            "Ocorreu um erro ao processar a imagem. Por favor, tente novamente."
+          );
         }
       }
     };
@@ -78,14 +83,19 @@ const MenuBar = ({ editor }) => {
   };
 
   const addTable = () => {
-    editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run();
+    editor
+      .chain()
+      .focus()
+      .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+      .run();
   };
 
   const MenuButton = ({ onClick, isActive, children }) => (
     <button
       onClick={onClick}
-      className={`p-2 rounded hover:bg-gray-700 transition-colors ${isActive ? "bg-gray-700 text-white" : "text-gray-200 hover:text-white"
-        }`}
+      className={`p-2 rounded hover:bg-gray-700 transition-colors ${
+        isActive ? "bg-gray-700 text-white" : "text-gray-200 hover:text-white"
+      }`}
     >
       {children}
     </button>
@@ -94,7 +104,7 @@ const MenuBar = ({ editor }) => {
   const ColorButton = () => (
     <input
       type="color"
-      value="#FFFFFF"
+      value={editor.getAttributes("textStyle").color || "#FFFFFF"}
       onChange={(e) => editor.chain().focus().setColor(e.target.value).run()}
       className="w-8 h-8 p-0 bg-transparent border-none cursor-pointer"
       title="Escolher cor"
@@ -103,16 +113,19 @@ const MenuBar = ({ editor }) => {
 
   return (
     <div className="border border-white rounded-t-md p-2 bg-[#272525] flex flex-wrap gap-2">
-      {/* Texto e Parágrafos */}
       <div className="flex gap-2">
         <MenuButton
-          onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 1 }).run()
+          }
           isActive={editor.isActive("heading", { level: 1 })}
         >
           <Heading1 size={20} />
         </MenuButton>
         <MenuButton
-          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 2 }).run()
+          }
           isActive={editor.isActive("heading", { level: 2 })}
         >
           <Heading2 size={20} />
@@ -121,7 +134,6 @@ const MenuBar = ({ editor }) => {
 
       <div className="w-px h-6 bg-gray-600 self-center" />
 
-      {/* Formatação de Texto */}
       <div className="flex gap-2">
         <MenuButton
           onClick={() => editor.chain().focus().toggleBold().run()}
@@ -152,7 +164,6 @@ const MenuBar = ({ editor }) => {
 
       <div className="w-px h-6 bg-gray-600 self-center" />
 
-      {/* Scripts e Código */}
       <div className="flex gap-2">
         <MenuButton
           onClick={() => editor.chain().focus().toggleSuperscript().run()}
@@ -176,7 +187,6 @@ const MenuBar = ({ editor }) => {
 
       <div className="w-px h-6 bg-gray-600 self-center" />
 
-      {/* Alinhamento */}
       <div className="flex gap-2">
         <MenuButton
           onClick={() => editor.chain().focus().setTextAlign("left").run()}
@@ -251,7 +261,10 @@ async function uploadImageToCloudinary(file) {
   cloudData.append("file", file);
   cloudData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_PRESET);
 
-  const response = await axios.post(process.env.NEXT_PUBLIC_CLOUDINARY_URL, cloudData);
+  const response = await axios.post(
+    process.env.NEXT_PUBLIC_CLOUDINARY_URL,
+    cloudData
+  );
   return response.data.secure_url;
 }
 
@@ -300,34 +313,35 @@ const TipTapEditor = ({ content, onChange }) => {
       }
     },
   });
-  
+
   useEffect(() => {
     if (editor) {
-      editor.chain().focus().setColor('#FFFFFF').run();
+      editor.chain().focus().setColor("#FFFFFF").run();
     }
   }, [editor]);
 
   return (
     <div className="border border-white rounded-md overflow-hidden flex flex-col">
-      {/* Aplicando position sticky ao MenuBar */}
       <div className="sticky top-0 z-10">
         <MenuBar editor={editor} />
       </div>
-      
+
       <div className="min-h-[360px] bg-[#272525] overflow-y-auto">
-        <EditorContent editor={editor} className="prose prose-invert max-w-7xl h-[60vh]" />
+        <EditorContent
+          editor={editor}
+          className="prose prose-invert max-w-7xl h-[60vh]"
+        />
         <style jsx global>{`
           .ProseMirror {
             min-height: 360px;
             max-height: 600px;
             overflow-y: auto;
             padding: 1rem;
+            color: #fff;
           }
-
           .ProseMirror:focus {
             outline: none;
           }
-
           .ProseMirror p.is-editor-empty:first-child::before {
             color: #666;
             content: attr(data-placeholder);
@@ -335,7 +349,7 @@ const TipTapEditor = ({ content, onChange }) => {
             height: 0;
             pointer-events: none;
           }
-        `}</style>  
+        `}</style>
       </div>
     </div>
   );
