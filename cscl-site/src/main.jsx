@@ -21,7 +21,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<DashBoardPage />} />
           <Route path="/create-post" element={<CreatePostPage />} />
-          <Route path="/edit-post" element={<EditPostPage />} />
+          <Route path="/edit-post/:id" element={<EditPostPage />} />
           <Route path="/blog/:slug" element={<ViewPostPage />} />
         </Routes>
       </UserContextProvider>

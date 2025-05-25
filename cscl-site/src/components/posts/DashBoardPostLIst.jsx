@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { getPosts } from "../../services/postService.js";
+import { getPosts, deletePost } from "../../services/postService.js";
 import { UserContext } from "../../context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +8,10 @@ const DashboardPostList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [postToDelete, setPostToDelete] = useState(null);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const pageSize = 5;
@@ -49,17 +53,74 @@ const DashboardPostList = () => {
   };
 
   const handleEdit = (postId) => {
-    // Implementar edição
-    console.log("Editando post:", postId);
+    navigate(`/edit-post/${postId}`);
   };
 
   const handleDelete = (postId) => {
-    // Implementar deleção
-    console.log("Deletando post:", postId);
+    setPostToDelete(postId);
+    setShowConfirmModal(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!user || !user.token) {
+      setFeedbackMessage("Você precisa estar logado para excluir um post.");
+      setShowFeedbackModal(true);
+      setShowConfirmModal(false);
+      return;
+    }
+    try {
+      await deletePost(user.token, postToDelete);
+      setFeedbackMessage("Post excluído com sucesso!");
+      fetchPosts(currentPage);
+    } catch (error) {
+      setFeedbackMessage("Erro ao excluir post.");
+    } finally {
+      setShowFeedbackModal(true);
+      setShowConfirmModal(false);
+      setPostToDelete(null);
+    }
   };
 
   return (
     <div className="space-y-10 min-w-[90vw] min-h-[50vh] relative xl:min-w-[50vw]">
+      {showConfirmModal && (
+        <div className="fixed inset-0 flex justify-center items-center z-50">
+          <div className="bg-white rounded-lg p-8 flex flex-col items-center shadow-lg border border-gray-300">
+            <p className="mb-4 text-black">
+              Tem certeza que deseja excluir este post?
+            </p>
+            <div className="flex gap-4">
+              <button
+                onClick={confirmDelete}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+              >
+                Excluir
+              </button>
+              <button
+                onClick={() => setShowConfirmModal(false)}
+                className="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showFeedbackModal && (
+        <div className="fixed inset-0 flex justify-center items-center z-50">
+          <div className="bg-white rounded-lg p-8 flex flex-col items-center shadow-lg border border-gray-300">
+            <p className="mb-4 text-black">{feedbackMessage}</p>
+            <button
+              onClick={() => setShowFeedbackModal(false)}
+              className="px-4 py-2 bg-main text-white rounded hover:bg-red-700"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
       {loading ? (
         <div className="absolute inset-0 flex items-center justify-center">
           <p className="whitespace-nowrap text-white text-lg md:text-3xl">
