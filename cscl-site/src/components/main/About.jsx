@@ -1,12 +1,16 @@
 export default function About() {
   return (
     <div
-      className="w-full min-h-[100vh] flex flex-col gap-[1.5rem] justify-center items-center bg-secondary p-[1.6rem]"
+      className="w-full min-h-[100vh] flex flex-col md:flex-row gap-[1.5rem] justify-center items-center bg-secondary p-[1.6rem] md:p[2rem] md:gap-[2rem]"
       id="about"
     >
-      <img src="assets/img/fotodetodos2023.jpg" alt="" className="md:w-1/2" />
-      <h1 className="text-white text-[1.5rem]">Sobre Nós</h1>
-      <div className="flex flex-col gap-[1rem] justify-center items-center text-[1rem]">
+      <img
+        src="assets/img/fotodetodos2023.jpg"
+        alt=""
+        className="md:w-1/2 md:p-[2rem]"
+      />
+      <div className="flex flex-col gap-[1rem] justify-center items-center text-[1rem] md:p-[2.5rem] md:w-1/2">
+        <h1 className="text-white text-[2rem] font-bold">Sobre Nós</h1>
         <p className="text-white text-justify md:text-[1rem]">
           Fundada em 16 de outubro de 1971, a Casa São Camilo de Lelis é uma
           Organização da Sociedade Civil (OSC) sem fins lucrativos, dedicada ao
