@@ -16,13 +16,29 @@ export default function Card({ title, para, img }) {
 
   return (
     <div
-      className={`w-[30vw] min-h-[40vh] text-whiteColor flex align-center justify-center p-[1rem] mb-[1rem] mt-[1rem] bg-cover bg-center bg-no-repeat position-relative overflow-hidden perspective-[1000px] shadow-xl after:content-[''] after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-[#a61a19] after:opacity-[0.99] after:mix-blend-multiply after:transition-all after:duration-300 after:z-[1]`}
-      onMouseEnter={() => {
-        setAtivo(true);
-      }}
-      onMouseLeave={() => {
-        setAtivo(false);
-      }}
+      className={`
+        w-[90%] sm:w-[60%] md:w-[30vw]
+        min-h-[40vh]
+        mx-auto
+        text-whiteColor
+        flex items-center justify-center
+        p-4
+        my-4
+        bg-cover bg-center bg-no-repeat
+        relative overflow-hidden
+        perspective-[1000px]
+        shadow-xl
+        after:content-['']
+        after:absolute after:top-0 after:left-0
+        after:w-full after:h-full
+        after:bg-[#a61a19]
+        after:opacity-[0.99]
+        after:mix-blend-multiply
+        after:transition-all after:duration-300
+        after:z-[1]
+      `}
+      onMouseEnter={() => setAtivo(true)}
+      onMouseLeave={() => setAtivo(false)}
       style={
         ePraGirar
           ? {

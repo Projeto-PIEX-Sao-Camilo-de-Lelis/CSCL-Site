@@ -45,7 +45,7 @@ export default function CardsMobile() {
       >
         {cards.map((c) => (
           <SwiperSlide>
-            <Card titulo={c.titulo} paragrafo={c.paragrafo} />
+            <p className="text-black">{c.titulo}</p>
           </SwiperSlide>
         ))}
       </Swiper>
