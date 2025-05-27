@@ -1,6 +1,6 @@
 export default function InstitutionalValues() {
   return (
-    <div className="w-full h-[80vh] md:h-[33vh] bg-main text-whiteColor p-[1.5rem]">
+    <div className="w-full min-h-[80vh] md:min-h-[33vh] bg-main text-whiteColor p-[1.5rem]">
       <div className="flex flex-col gap-[1.5rem] items-center justify-center h-full  w-full">
         <h1 className="text-[2rem] text-center">
           NOS AJUDE A TRANSFORMAR VIDAS
