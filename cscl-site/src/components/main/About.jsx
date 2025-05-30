@@ -1,15 +1,32 @@
 export default function About() {
   return (
     <div
-      className="w-full min-h-[100vh] flex flex-col md:flex-row gap-[1.5rem] justify-center items-center bg-secondary p-[1.6rem] md:p[2rem] md:gap-[2rem]"
+      className=" w-full min-h-[100vh]
+        flex flex-col md:flex-row
+        gap-[1.5rem] md:gap-[2rem]
+        justify-center items-center
+        bg-secondary
+        p-[1.6rem] md:p[2rem]
+        relative overflow-hidden
+
+        after:content-['']
+        after:absolute after:top-0 after:left-0
+        after:w-screen after:h-full
+        after:bg-black
+        after:opacity-[0.80]
+        after:mix-blend-multiply
+        after:transition-all after:duration-300
+        after:grayscale
+        after:z-[1] "
+      style={{ backgroundImage: `url(/assets/backgrounds/sobrenos.jpg` }}
       id="about"
     >
       <img
         src="assets/img/fotodetodos2023.jpg"
         alt=""
-        className="md:w-1/2 md:p-[2rem]"
+        className="md:w-1/2 md:p-[2rem] z-[10]"
       />
-      <div className="flex flex-col gap-[1rem] justify-center items-center text-[1rem] md:p-[2.5rem] md:w-1/2">
+      <div className="flex flex-col gap-[1rem] justify-center items-center text-[1rem] md:p-[2.5rem] md:w-1/2 z-[10]">
         <h1 className="text-white text-[2rem] font-bold">Sobre Nós</h1>
         <p className="text-white text-justify md:text-[1rem]">
           Fundada em 16 de outubro de 1971, a Casa São Camilo de Lelis é uma
