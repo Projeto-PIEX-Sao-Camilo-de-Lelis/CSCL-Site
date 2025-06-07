@@ -15,7 +15,7 @@ export default function SideMenu() {
   };
 
   return (
-    <div className="flex flex-col fixed bottom-0 right-0 m-2 z-100 gap-[0.4rem]">
+    <div className="flex flex-col fixed bottom-0 right-0 m-2 z-100 gap-[0.1rem]">
       <Btn
         alt="subir para o topo da página"
         icon="/assets/icons/arrow.png"

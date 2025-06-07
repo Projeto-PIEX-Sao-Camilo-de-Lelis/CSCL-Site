@@ -1,7 +1,7 @@
 export default function Donations() {
   return (
     <div
-      className="flex flex-row items-center justify-around w-full max-w-screen min-h-[50vh] bg-main text-whiteColor p-[1.5rem] gap-[2.5rem]"
+      className="flex flex-row items-center justify-around w-full max-w-screen min-h-[50vh] bg-main/95 text-whiteColor p-[1.5rem] gap-[2.5rem]"
       id="donations"
     >
       <div className="flex flex-col items-center justify-center text-center font-bold gap-[1rem] w-full md:w-1/2">
