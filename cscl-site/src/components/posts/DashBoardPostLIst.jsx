@@ -140,9 +140,9 @@ const DashboardPostList = () => {
             {postsData.posts.map((post) => (
               <div
                 key={post.id}
-                className="w-[900px] border rounded-2xl border-red-600 bg-[#272525] p-4 relative transition-transform duration-300 hover:scale-105"
+                className="md:w-[900px] w-[300px] border rounded-2xl border-red-600 bg-[#272525] p-4 relative transition-transform duration-300 hover:scale-105"
               >
-                <div className="flex flex-row align-around justify-between">
+                <div className="flex md:flex-row flex-col align-around justify-between">
                   <h2 className="font-bold sm:text-xl md:text-2xl text-gray-100 hover:text-red-500 transition duration-300">
                     {post.title}
                   </h2>
@@ -175,22 +175,20 @@ const DashboardPostList = () => {
               <button
                 onClick={handlePreviousPage}
                 disabled={currentPage === 1}
-                className={`px-4 py-2 rounded-2xl bg-main text-white ${
-                  currentPage === 1
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:bg-red-700"
-                }`}
+                className={`px-4 py-2 rounded-2xl bg-main text-white ${currentPage === 1
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-red-700"
+                  }`}
               >
                 Anterior
               </button>
               <button
                 onClick={handleNextPage}
                 disabled={currentPage === postsData.totalPages}
-                className={`px-4 py-2 rounded-2xl bg-main text-white ${
-                  currentPage === postsData.totalPages
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:bg-red-700"
-                }`}
+                className={`px-4 py-2 rounded-2xl bg-main text-white ${currentPage === postsData.totalPages
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-red-700"
+                  }`}
               >
                 Próxima
               </button>

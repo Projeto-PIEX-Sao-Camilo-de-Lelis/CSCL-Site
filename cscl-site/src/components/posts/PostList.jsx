@@ -69,7 +69,7 @@ const PostList = () => {
               <h3 className="text-xs sm:font-light md:text-xl md:font-normal text-gray-400 mt-2 line-clamp-3">
                 {post.contentPreview}
               </h3>
-              <div className="text-xs sm:font-light md:text-sm md:font-normal text-gray-400 mt-4 absolute bottom-3">
+              <div className="text-xs sm:font-light md:text-xl md:font-normal text-gray-400 mt-4 absolute bottom-3">
                 <span>{post.author}</span> •{" "}
                 <span>
                   {post.publishedAt}{" "}
@@ -92,22 +92,20 @@ const PostList = () => {
           <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
-            className={`px-4 py-2 rounded-2xl bg-main text-white ${
-              currentPage === 1
+            className={`px-4 py-2 rounded-2xl bg-main text-white ${currentPage === 1
                 ? "opacity-50 cursor-not-allowed"
                 : "hover:bg-red-700"
-            }`}
+              }`}
           >
             Anterior
           </button>
           <button
             onClick={handleNextPage}
             disabled={currentPage === postsData.totalPages}
-            className={`px-4 py-2 rounded-2xl bg-main text-white ${
-              currentPage === postsData.totalPages
+            className={`px-4 py-2 rounded-2xl bg-main text-white ${currentPage === postsData.totalPages
                 ? "opacity-50 cursor-not-allowed"
                 : "hover:bg-red-700"
-            }`}
+              }`}
           >
             Próxima
           </button>

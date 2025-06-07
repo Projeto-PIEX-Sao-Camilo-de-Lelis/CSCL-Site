@@ -21,7 +21,7 @@ export default function Menu() {
           <img
             src="/assets/icons/logo4.png"
             alt="logo da Casa São Camillo de Lelis"
-            className="w-10 h-10 md:w-20 md:h-20 object-contain"
+            className="w-12 h-12 md:w-20 md:h-20 object-contain"
           />
         </div>
         <h1 className="text-[1.2rem] md:text-4xl">Casa Camilo de Lelis</h1>
