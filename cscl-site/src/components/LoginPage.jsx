@@ -46,7 +46,7 @@ export default function LoginPage() {
         <Menu />
       </div>
       <div className="flex flex-col justify-center items-center min-w-full min-h-[70vh]">
-        <div className="flex flex-col justify-center items-center gap-4 bg-[#1b1b1b] w-[70vw] min-h-[50vh] md:w-[20vw] md:min-h-[50vh] border rounded-2xl border-red-600">
+        <div className="flex flex-col justify-center items-center gap-4 bg-[#272525] w-[70vw] min-h-[50vh] md:w-[20vw] md:min-h-[50vh] border rounded-2xl border-red-600">
           <div className="flex flex-col justify-center items-center min-w-[60vw] md:min-w-[15vw]">
             <span className="text-[1.2rem] text-whiteColor mb-2 md:text-[1.3rem]">
               Login

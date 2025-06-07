@@ -17,6 +17,7 @@ export default function ViewPostPage() {
     async function fetchPost() {
       try {
         const data = await getPost(slug);
+
         setPost(data);
 
         if (data && data.content) {
@@ -71,7 +72,7 @@ export default function ViewPostPage() {
                 </h1>
               </div>
               <div className="flex flex-col">
-                <span className="text-gray-400 text-[1rem] justify-start">
+                <span className="text-gray-400 text-[1rem] justify-start break-words">
                   Autor: {post.author}
                 </span>
                 <span className="text-gray-400 text-[1rem] justify-start">
@@ -87,7 +88,8 @@ export default function ViewPostPage() {
                 />
               </div>
               <div
-                className="w-full text-white text-[1.2rem] prose prose-invert text-justify"
+                className="w-full text-white text-[1.2rem] text-justify break-words"
+                style={{ margin: "0 auto" }}
                 dangerouslySetInnerHTML={{ __html: textHtml }}
               />
             </div>

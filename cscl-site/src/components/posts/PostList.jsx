@@ -60,16 +60,16 @@ const PostList = () => {
         {postsData.posts.map((post) => (
           <div
             key={post.id}
-            className="border rounded-2xl border-red-600 bg-[#272525] pb-9 relative transition-transform duration-300 hover:scale-105"
+            className="w-[80vw] h-[20vh] md:min-h-[200px] border rounded-2xl border-red-600 bg-[#272525] pb-9 relative transition-transform duration-300 hover:scale-105"
           >
             <div className="flex flex-col justify-center items-start p-4">
               <h2 className="sm:text-2xl sm:font-light md:text-3xl md:font-bold text-white hover:text-red-500 transition duration-300">
                 <Link to={`/blog/${post.slug}`}>{post.title}</Link>
               </h2>
-              <h3 className="sm:text-xs sm:font-light md:text-sm md:font-normal text-gray-400 mt-2 line-clamp-3">
+              <h3 className="text-xs sm:font-light md:text-xl md:font-normal text-gray-400 mt-2 line-clamp-3">
                 {post.contentPreview}
               </h3>
-              <div className="sm:text-xs sm:font-light md:text-sm md:font-normal text-gray-400 mt-4 absolute bottom-3">
+              <div className="text-xs sm:font-light md:text-sm md:font-normal text-gray-400 mt-4 absolute bottom-3">
                 <span>{post.author}</span> •{" "}
                 <span>
                   {post.publishedAt}{" "}

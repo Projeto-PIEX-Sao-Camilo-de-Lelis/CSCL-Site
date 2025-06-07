@@ -140,9 +140,9 @@ const DashboardPostList = () => {
             {postsData.posts.map((post) => (
               <div
                 key={post.id}
-                className="w-full border rounded-2xl border-red-600 bg-[#272525] p-4 relative transition-transform duration-300 hover:scale-105"
+                className="w-[900px] border rounded-2xl border-red-600 bg-[#272525] p-4 relative transition-transform duration-300 hover:scale-105"
               >
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-row align-around justify-between">
                   <h2 className="font-bold sm:text-xl md:text-2xl text-gray-100 hover:text-red-500 transition duration-300">
                     {post.title}
                   </h2>

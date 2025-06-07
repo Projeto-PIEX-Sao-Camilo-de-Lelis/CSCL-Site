@@ -256,18 +256,6 @@ const MenuBar = ({ editor }) => {
   );
 };
 
-async function uploadImageToCloudinary(file) {
-  const cloudData = new FormData();
-  cloudData.append("file", file);
-  cloudData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_PRESET);
-
-  const response = await axios.post(
-    process.env.NEXT_PUBLIC_CLOUDINARY_URL,
-    cloudData
-  );
-  return response.data.secure_url;
-}
-
 const TipTapEditor = ({ content, onChange }) => {
   const editor = useEditor({
     extensions: [
