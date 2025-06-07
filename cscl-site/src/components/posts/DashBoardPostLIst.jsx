@@ -43,12 +43,14 @@ const DashboardPostList = () => {
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage((prev) => prev - 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const handleNextPage = () => {
     if (currentPage < postsData.totalPages) {
       setCurrentPage((prev) => prev + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -138,10 +140,10 @@ const DashboardPostList = () => {
             {postsData.posts.map((post) => (
               <div
                 key={post.id}
-                className="w-full border-b rounded-2xl border-red-600 bg-gradient-to-r from-black via-gray-950 via-red-950 to-black p-4 relative transition-transform duration-300 hover:scale-105"
+                className="w-full border rounded-2xl border-red-600 bg-[#272525] p-4 relative transition-transform duration-300 hover:scale-105"
               >
                 <div className="flex flex-col gap-4">
-                  <h2 className="font-bold sm:text-xl md:text-2xl text-gray-100">
+                  <h2 className="font-bold sm:text-xl md:text-2xl text-gray-100 hover:text-red-500 transition duration-300">
                     {post.title}
                   </h2>
                   <div className="flex gap-4">

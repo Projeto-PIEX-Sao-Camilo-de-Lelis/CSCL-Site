@@ -1,13 +1,12 @@
 export default function InstitutionalValues() {
   return (
-    <div className="w-full min-h-[100vh] md:min-h-[60vh] bg-main/95 text-whiteColor p-[1.5rem] flex items-center justify-center">
+    <div className="w-full min-h-[100vh] md:min-h-[30vh] bg-main/95 text-whiteColor p-[1.5rem] flex items-center justify-center">
       <div className="flex flex-col gap-[1.5rem] items-center justify-center h-full w-full">
         <h1 className="text-[2rem] text-center">
           NOS AJUDE A TRANSFORMAR VIDAS
         </h1>
         <div className="flex flex-col md:flex-row items-center justify-around h-full text-center gap-[1 rem] md:gap-[1.5 rem] w-full">
           <div className="flex flex-col md:gap-[1rem] items-center text-center min-h-[260px] justify-center w-full md:w-1/3">
-
             <h2 className="text-[1.5rem] text-center">MISSÃO</h2>
             <p className="text-center text">
               Oferecer acolhimento integral a pessoas em situação de rua,
