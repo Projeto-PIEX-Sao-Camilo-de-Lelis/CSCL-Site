@@ -1,6 +1,7 @@
 import Footer from "./footer/Footer";
 import Menu from "./menu/Menu";
 import TipTapEditor from "./tiptap/TipTapEditor";
+import { ArrowLeft } from "lucide-react";
 import { createBlogPost } from "../services/postService";
 import { useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
@@ -44,6 +45,15 @@ export default function CreatePostPage() {
                 <h1 className="text-center w-full text-2xl m-7">Criar Post</h1>
             </div>
 
+            <div className="self-start ml-4 mt-4">
+                <button
+                    onClick={() => navigate(-1)}
+                    className="flex text-whiteflex gap-2 text-white hover:text-main transition"
+                >
+                    <ArrowLeft className="mr-2" />
+                </button>
+            </div>
+
             <div className="flex flex-col justify-center items-center min-w-[40vw] bg-[#272525] md:min-w-[60vw] p-8 rounded-2xl shadow-lg mt-8 mb-8">
                 <label className="text-white text-[1.5rem] mb-4">Título</label>
                 <input
@@ -55,11 +65,11 @@ export default function CreatePostPage() {
 
                 <label className="text-white text-[1.5rem] mb-4">Conteúdo</label>
                 <div className="w-full h-[70vh] mb-6">
-                    <TipTapEditor content={content} onChange={setContent}/>
+                    <TipTapEditor content={content} onChange={setContent} />
                 </div>
                 <div>
-                    <button 
-                        onClick={handleSubmit} 
+                    <button
+                        onClick={handleSubmit}
                         className="px-6 py-3 bg-main text-white text-[1.2rem] rounded-lg hover:bg-red-700 transition duration-300 mt-5"
                     >
                         Postar

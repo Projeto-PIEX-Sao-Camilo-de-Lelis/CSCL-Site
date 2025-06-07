@@ -1,5 +1,6 @@
 import Footer from "./footer/Footer";
 import Menu from "./menu/Menu";
+import { ArrowLeft } from "lucide-react";
 import TipTapEditor from "./tiptap/TipTapEditor";
 import { getPostById, updatePost } from "../services/postService";
 import { useState, useContext, useEffect } from "react";
@@ -75,6 +76,15 @@ export default function EditPostPage() {
       <Menu />
       <div className="flex flex-col w-full justify-center items-center font-bold p-[1rem] bg-gradient-to-r from-black via-red-900 to-red-400 text-whiteColor">
         <h1 className="text-center w-full text-2xl m-7">Editar Post</h1>
+      </div>
+
+      <div className="self-start ml-4 mt-4">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex text-whiteflex gap-2 text-white hover:text-main transition"
+        >
+          <ArrowLeft className="mr-2" />
+        </button>
       </div>
 
       <div className="flex flex-col justify-center items-center min-w-[40vw] bg-[#272525] md:min-w-[60vw] p-8 rounded-2xl shadow-lg mt-8 mb-8">
