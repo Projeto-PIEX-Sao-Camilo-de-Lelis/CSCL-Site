@@ -23,8 +23,6 @@ export default function VisitorChart() {
         const formattedEndDate = endDate.toISOString().split("T")[0];
 
         const data = await getVisitorsByDate(formattedStartDate, formattedEndDate);
-        console.log("Dados recebidos da API:", data);
-
         const processedData = [];
 
         for (let i = 0; i < 7; i++) {
