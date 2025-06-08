@@ -10,31 +10,39 @@ import { useNavigate } from "react-router-dom";
 export default function CreatePostPage() {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+    const [feedbackMessage, setFeedbackMessage] = useState("");
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
 
     const handleSubmit = async () => {
         try {
             if (!user || !user.token) {
-                alert("Você precisa estar logado para criar um post.");
+                setFeedbackMessage("Você precisa estar logado para criar um post.");
+                setShowFeedbackModal(true);
                 return;
             }
 
             if (!title || !content) {
-                alert("Título e conteúdo são obrigatórios.");
+                setFeedbackMessage("Título e conteúdo são obrigatórios.");
+                setShowFeedbackModal(true);
                 return;
             }
 
-            const postData = {
-                title,
-                content
-            };
-
+            const postData = { title, content };
             await createBlogPost(user.token, postData);
-            alert("Post criado com sucesso!");
-            navigate("/dashboard");
+            setFeedbackMessage("Post criado com sucesso!");
+            setShowFeedbackModal(true);
         } catch (error) {
-            console.error("Erro ao criar post:", error);
+            setFeedbackMessage("Erro ao criar post.");
+            setShowFeedbackModal(true);
+        }
+    };
+
+    const handleCloseModal = () => {
+        setShowFeedbackModal(false);
+        if (feedbackMessage === "Post criado com sucesso!") {
+            navigate("/dashboard");
         }
     };
 
@@ -76,6 +84,20 @@ export default function CreatePostPage() {
                     </button>
                 </div>
             </div>
+
+            {showFeedbackModal && (
+                <div className="fixed inset-0 flex justify-center items-center z-50">
+                    <div className="bg-white rounded-lg p-8 flex flex-col items-center shadow-lg border border-gray-300">
+                        <p className="mb-4 text-black">{feedbackMessage}</p>
+                        <button
+                            onClick={handleCloseModal}
+                            className="px-4 py-2 bg-main text-white rounded hover:bg-red-700"
+                        >
+                            OK
+                        </button>
+                    </div>
+                </div>
+            )}
 
             <Footer />
         </div>
