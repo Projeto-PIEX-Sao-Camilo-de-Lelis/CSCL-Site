@@ -30,7 +30,6 @@ export const recordVisit = async (pageUrl) => {
         }, {
             headers: token ? { Authorization: `Bearer ${token}` } : {}
         });
-        console.log(`Visita registrada para a URL: ${pageUrl}`);
     } catch (error) {
         console.error(`Erro ao registrar visita: ${error}`);
     }
