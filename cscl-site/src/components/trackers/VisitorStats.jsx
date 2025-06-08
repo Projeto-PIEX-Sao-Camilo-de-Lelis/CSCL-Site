@@ -64,7 +64,7 @@ export default function VisitorStats() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-zinc-800 p-4 rounded-lg">
-          <h3 className="text-lg font-medium mb-2 text-gray-300">Total de Visitas</h3>
+          <h3 className="text-lg font-medium mb-2 text-gray-300">Total de visitantes</h3>
           <p className="text-3xl font-bold text-red-400">{visitorCount.toLocaleString("pt-BR")}</p>
         </div>
 

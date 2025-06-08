@@ -6,34 +6,35 @@ export default function VisitorTracker() {
   const location = useLocation();
 
   useEffect(() => {
-    const currentPath = location.pathname;
-    const lastVisitData = localStorage.getItem("lastVisitedPath");
-    const now = new Date().getTime();
+    const lastVisitData = localStorage.getItem("lastVisitorRecord");
+    const now = new Date();
+    const today = now.toLocaleDateString();
     let shouldRecordVisit = true;
 
     if (lastVisitData) {
       try {
-        const { path, timestamp } = JSON.parse(lastVisitData);
+        const { date } = JSON.parse(lastVisitData);
 
-        if (path === currentPath && now - timestamp < 30 * 60 * 1000) {
+        if (date === today) {
           shouldRecordVisit = false;
         }
       } catch (error) {
-        console.error("Ocorreu um erro ao tentar processar os dados de registro de visita.", error);
+        console.error("Ocorreu um erro ao processar os dados de registro de visita.", error);
       }
     }
 
     if (shouldRecordVisit) {
-      recordVisit(currentPath);
+      recordVisit(location.pathname);
       localStorage.setItem(
-        "lastVisitedPath",
+        "lastVisitorRecord",
         JSON.stringify({
-          path: currentPath,
-          timestamp: now,
+          date: today,
+          timestamp: now.getTime(),
+          path: location.pathname,
         })
       );
     }
-  }, [location]);
+  }, []);
 
   return null;
 }

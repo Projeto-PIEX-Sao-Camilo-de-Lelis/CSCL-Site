@@ -5,26 +5,22 @@ export default function VisitorChart() {
   const [visitData, setVisitData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const formatDateForAPI = (date) => {
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
 
-        const endDate = new Date();
-        const startDate = new Date();
+        const now = new Date();
+        const endDate = new Date(now);
+
+        endDate.setHours(23, 59, 59, 999);
+        const startDate = new Date(now);
+
         startDate.setDate(startDate.getDate() - 6);
+        startDate.setHours(0, 0, 0, 0);
 
-        const formattedStartDate = formatDateForAPI(startDate);
-        const formattedEndDate = formatDateForAPI(endDate);
-
-        console.log(`Buscando dados de: ${formattedStartDate} até: ${formattedEndDate}`);
+        const formattedStartDate = startDate.toISOString().split("T")[0];
+        const formattedEndDate = endDate.toISOString().split("T")[0];
 
         const data = await getVisitorsByDate(formattedStartDate, formattedEndDate);
         console.log("Dados recebidos da API:", data);
@@ -32,23 +28,24 @@ export default function VisitorChart() {
         const processedData = [];
 
         for (let i = 0; i < 7; i++) {
-          const date = new Date(startDate);
-          date.setDate(date.getDate() + i);
+          const currentDate = new Date(startDate);
+          currentDate.setDate(startDate.getDate() + i);
 
-          const apiDateFormat = formatDateForAPI(date);
-          const dateStr = date.toISOString().split("T")[0];
+          const dateKey = currentDate.toISOString().split("T")[0];
+          const label = currentDate.toLocaleDateString("pt-BR", {
+            day: "2-digit",
+            month: "2-digit",
+          });
+
+          const count = data[dateKey] || 0;
 
           processedData.push({
-            date: dateStr,
-            count: data[dateStr] || data[apiDateFormat] || 0,
-            label: new Date(dateStr).toLocaleDateString("pt-BR", {
-              day: "2-digit",
-              month: "2-digit",
-            }),
+            date: dateKey,
+            count: count,
+            label: label,
           });
         }
 
-        console.log("Dados processados:", processedData);
         setVisitData(processedData);
         setIsLoading(false);
       } catch (err) {
@@ -65,7 +62,6 @@ export default function VisitorChart() {
   }
 
   const maxValue = Math.max(...visitData.map((d) => d.count), 1);
-  console.log("Valor máximo para escala:", maxValue);
 
   return (
     <div className="mt-6 bg-zinc-800 p-4 rounded-lg">
