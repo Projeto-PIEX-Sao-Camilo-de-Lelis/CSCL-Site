@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import Footer from "./footer/Footer";
 import Menu from "./menu/Menu";
-import DashboardPostList from "./posts/DashBoardPostList";
+import DashboardPostList from "./posts/DashBoardPostLIst";
+import VisitorStats from "./trackers/VisitorStats";
 
 export default function DashBoardPage() {
   const navigate = useNavigate();
@@ -20,6 +21,12 @@ export default function DashBoardPage() {
           Criar postagem
         </button>
         <DashboardPostList />
+      </div>
+
+      <div className="mb-7 flex flex-col sm:w-full md:w-6xl lg:w-5xl justify-start items-center p-[1rem] text-whiteColor">
+        <hr className="text-zinc-700 border-2 w-full" />
+        <h2 className="text-center w-full text-xl mt-4 mb-4">Estatísticas do site</h2>
+        <VisitorStats />
       </div>
 
       <Footer />

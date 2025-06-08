@@ -10,11 +10,13 @@ import DashBoardPage from "./components/DashBoardPage.jsx";
 import CreatePostPage from "./components/CreatePostPage.jsx";
 import ViewPostPage from "./components/ViewPostPage.jsx";
 import EditPostPage from "./components/EditPostPage";
+import VisitorTracker from "./components/trackers/VisitorTracker.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <UserContextProvider>
+        <VisitorTracker />
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/blog" element={<BlogPage />} />
