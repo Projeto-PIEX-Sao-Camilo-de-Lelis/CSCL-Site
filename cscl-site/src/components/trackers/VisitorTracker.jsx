@@ -15,7 +15,7 @@ export default function VisitorTracker() {
       try {
         const { path, timestamp } = JSON.parse(lastVisitData);
 
-        if (path === currentPath && now - timestamp < 10 * 60 * 1000) {
+        if (path === currentPath && now - timestamp < 30 * 60 * 1000) {
           shouldRecordVisit = false;
         }
       } catch (error) {
