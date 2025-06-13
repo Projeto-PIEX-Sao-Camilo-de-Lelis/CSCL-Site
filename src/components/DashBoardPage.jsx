@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Footer from "./footer/Footer";
 import Menu from "./menu/Menu";
-import DashboardPostList from "./posts/DashBoardPostLIst";
+import DashboardPostList from "./posts/DashBoardPostList";
 import VisitorStats from "./trackers/VisitorStats";
 
 export default function DashBoardPage() {
