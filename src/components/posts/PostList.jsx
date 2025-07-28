@@ -93,24 +93,61 @@ const PostList = () => {
 
         {!loading &&
           !isServiceUnavailable &&
-          postsData.posts.map((post) => (
+          postsData.posts.map((post, index) => (
             <div
               key={post.id}
-              className="w-[80vw] h-[20vh] md:min-h-[200px] border rounded-2xl border-red-600 bg-[#272525] pb-9 relative transition-transform duration-300 hover:scale-105"
+              className={`
+                group w-[80vw] border rounded-2xl border-red-600/30 bg-gradient-to-br 
+                from-[#272525] to-[#1a1818] p-6 relative transition-all duration-500 
+                hover:scale-[1.02] hover:shadow-2xl hover:border-red-600/60
+                hover:-translate-y-2 hover:z-10
+              `}
+              style={{
+                animationDelay: `${index * 0.1}s`,
+                animation: "slideInUp 0.6s ease-out forwards",
+              }}
             >
-              <div className="flex flex-col justify-center items-start p-4">
-                <h2 className="sm:text-2xl sm:font-light md:text-3xl md:font-bold text-white hover:text-red-500 transition duration-300">
-                  <Link to={`/blog/${post.slug}`}>{post.title}</Link>
+              <div className="flex flex-col justify-center items-start">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-2 h-2 bg-red-500 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
+                  <div className="flex flex-row text-xs text-gray-400">
+                    <span>Atualizado em {post.updatedAt ?? post.publishedAt}</span>
+                  </div>
+                </div>
+
+                <h2 className="sm:text-2xl md:text-3xl font-bold text-white group-hover:text-red-400 transition-colors duration-300 mb-3">
+                  <Link
+                    to={`/blog/${post.slug}`}
+                    className="hover:underline decoration-red-400 underline-offset-4"
+                  >
+                    {post.title}
+                  </Link>
                 </h2>
-                <h3 className="text-xs sm:font-light md:text-xl md:font-normal text-gray-400 mt-2 line-clamp-3">
+
+                <h3 className="text-base md:text-lg text-gray-400 mb-4 line-clamp-3 leading-relaxed">
                   {post.contentPreview}
                 </h3>
-                <div className="text-xs sm:font-light md:text-xl md:font-normal text-gray-400 mt-4 absolute bottom-3">
-                  <span>{post.author}</span> •{" "}
-                  <span>
-                    {post.publishedAt}{" "}
-                    {post.updatedAt != null && `• Atualizado em ${post.updatedAt}`}
-                  </span>
+
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center gap-2 text-sm text-gray-400">
+                    <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                      <span className="text-white font-bold text-xs">
+                        <img
+                          src="/assets/icons/logo4.png"
+                          alt="Logo da Casa São Camillo de Lelis"
+                          className="w-8 h-8 md:w-8 md:h-8 object-contain"
+                        />
+                      </span>
+                    </div>
+                    <span>{post.author}</span>
+                  </div>
+
+                  <Link
+                    to={`/blog/${post.slug}`}
+                    className="hidden sm:block px-4 py-2 bg-red-500 text-white rounded-full text-sm font-medium hover:bg-red-600 transform hover:scale-105 transition-all duration-300"
+                  >
+                    Ler post →
+                  </Link>
                 </div>
               </div>
             </div>

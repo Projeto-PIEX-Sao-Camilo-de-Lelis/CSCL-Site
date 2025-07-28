@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../../index.css";
 import { UserContext } from "../../context/UserContext";
 import HamburgerMenu from "./HamburgerMenu";
@@ -8,16 +8,30 @@ export default function Menu() {
   const { user, logout } = useContext(UserContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const isHome = location.pathname === "/";
 
+  // Adicionar efeito de scroll no menu
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <div
-      className={`flex items-center justify-between w-full min-h-[10vh] md:min-h-[12vh] bg-secondary text-whiteColor font-bold px-4`}
+      className={`
+        flex items-center justify-between w-full min-h-[10vh] md:min-h-[12vh] 
+        ${isScrolled ? "bg-secondary/95 backdrop-blur-md shadow-lg" : "bg-secondary"} 
+        text-whiteColor font-bold px-4 transition-all duration-300 sticky top-0 z-50
+      `}
     >
       <Link to={"/"}>
         <div className="flex items-center gap-2">
-          <div className="bg-white rounded-full p-1 flex items-center justify-center w-10 h-10 md:w-16 md:h-16 shadow-lg border border-gray-200">
+          <div className="bg-white rounded-full p-1 flex items-center justify-center w-10 h-10 md:w-16 md:h-16 shadow-lg border border-gray-200 group-hover:scale-105 transition-transform duration-300">
             <img
               src="/assets/icons/logo4.png"
               alt="Logo da Casa São Camillo de Lelis"
@@ -25,7 +39,9 @@ export default function Menu() {
             />
           </div>
 
-          <h1 className="text-[1rem] md:text-3xl">Casa Camilo de Lelis</h1>
+          <h1 className="text-[1rem] md:text-3xl group-hover:text-main transition-colors duration-300">
+            Casa Camilo de Lelis
+          </h1>
         </div>
       </Link>
 
