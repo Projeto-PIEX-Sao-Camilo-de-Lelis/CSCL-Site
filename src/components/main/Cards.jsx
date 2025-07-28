@@ -73,7 +73,7 @@ const cardsBot = [
   {
     key: 5,
     title: "Oficina de Artesanato",
-    para: "Contamos com aulas semanais de artesanato, com o intuito de estimular os sentidos, auxiliar o desenvolvimento da coordenação motora, desenvolver a criatividade e incentivar a percepção das cores. Fazendo utensílios, artes e decorações a partir de folhas de jornais, palitos, garrafas PET e outros materiais recicláveis.",
+    para: "Contamos com aulas semanais de artesanato, com o intuito de estimular os sentidos, auxiliar o desenvolvimento da coorderação motora, desenvolver a criatividade e incentivar a percepção das cores. Fazendo utensílios, artes e decorações a partir de folhas de jornais, palitos, garrafas PET e outros materiais recicláveis.",
     img: "artesanato.jpg",
   },
 ];
@@ -81,34 +81,24 @@ const cardsBot = [
 export default function Cards() {
   return (
     <div
-      className="w-full h-[100vh] flex flex-col justify-center items-center bg-whiteColor gap-[1rem]"
+      className="w-full min-h-screen md:h-[100vh] flex flex-col justify-center items-center bg-whiteColor gap-[1rem]"
       id="cards"
     >
       <div className="md:flex md:flex-col md:justify-center md:items-center hidden">
         <div className="flex flex-row gap-[1rem] ">
           {cardsTop.map((card, index) => (
-            <Card
-              key={index}
-              title={card.title}
-              para={card.para}
-              img={card.img}
-            />
+            <Card key={index} title={card.title} para={card.para} img={card.img} />
           ))}
         </div>
 
         <div className="flex flex-row gap-[1rem]">
           {cardsBot.map((card, index) => (
-            <Card
-              key={index}
-              title={card.title}
-              para={card.para}
-              img={card.img}
-            />
+            <Card key={index} title={card.title} para={card.para} img={card.img} />
           ))}
         </div>
       </div>
       <div
-        className="md:hidden w-full h-1/2 flex justify-center items-center"
+        className="md:hidden w-full h-[70vh] sm:h-[60vh] flex justify-center items-center px-4"
         id="programas-mobile"
       >
         <Swiper

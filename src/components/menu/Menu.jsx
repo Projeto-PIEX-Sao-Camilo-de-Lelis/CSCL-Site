@@ -4,7 +4,6 @@ import { UserContext } from "../../context/UserContext";
 import HamburgerMenu from "./HamburgerMenu";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 
-
 export default function Menu() {
   const { user, logout } = useContext(UserContext);
   const navigate = useNavigate();
@@ -16,16 +15,19 @@ export default function Menu() {
     <div
       className={`flex items-center justify-between w-full min-h-[15vh] md:min-h-[20vh] bg-secondary text-whiteColor font-bold px-4`}
     >
-      <div className="flex items-center gap-2">
-        <div className="bg-white rounded-full p-2 flex items-center justify-center w-12 h-12 md:w-20 md:h-20 shadow-lg border border-gray-200">
-          <img
-            src="/assets/icons/logo4.png"
-            alt="logo da Casa São Camillo de Lelis"
-            className="w-12 h-12 md:w-20 md:h-20 object-contain"
-          />
+      <Link to={"/"}>
+        <div className="flex items-center gap-2">
+          <div className="bg-white rounded-full p-2 flex items-center justify-center w-12 h-12 md:w-20 md:h-20 shadow-lg border border-gray-200">
+            <img
+              src="/assets/icons/logo4.png"
+              alt="Logo da Casa São Camillo de Lelis"
+              className="w-12 h-12 md:w-20 md:h-20 object-contain"
+            />
+          </div>
+
+          <h1 className="text-[1.2rem] md:text-4xl">Casa Camilo de Lelis</h1>
         </div>
-        <h1 className="text-[1.2rem] md:text-4xl">Casa Camilo de Lelis</h1>
-      </div>
+      </Link>
 
       <div className="flex md:hidden">
         <HamburgerMenu />
@@ -58,10 +60,7 @@ export default function Menu() {
             >
               Nossas Histórias
             </a>
-            <a
-              className="p-[0.5rem] rounded-[1.2rem] cursor-pointer bg-main"
-              href="#donations"
-            >
+            <a className="p-[0.5rem] rounded-[1.2rem] cursor-pointer bg-main" href="#donations">
               DOAR AGORA
             </a>
           </>

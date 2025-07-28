@@ -13,12 +13,11 @@ export default function HamburgerMenu() {
 
   const handleNavigate = (path) => {
     navigate(path);
-    setIsOpen(false); // fecha o menu após navegação
+    setIsOpen(false);
   };
 
   return (
     <div className="md:hidden relative">
-      {/* Botão hambúrguer */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -26,7 +25,6 @@ export default function HamburgerMenu() {
         {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
       </button>
 
-      {/* Menu dropdown */}
       {isOpen && (
         <div className="absolute right-0 mt-2 w-[75vw] bg-secondary border-gray-200 rounded-lg shadow-lg z-50">
           <ul className="flex flex-col gap-[1rem] p-2 space-y-2 justify-center items-center text-whiteColor font-bold">
@@ -56,10 +54,7 @@ export default function HamburgerMenu() {
                 >
                   Nossas Histórias
                 </a>
-                <a
-                  className="p-[1rem] rounded-[1.2rem] cursor-pointer bg-main"
-                  href="#donations"
-                >
+                <a className="p-[1rem] rounded-[1.2rem] cursor-pointer bg-main" href="#donations">
                   DOAR AGORA
                 </a>
               </>

@@ -46,9 +46,16 @@ export default function LoginPage() {
         <Menu />
       </div>
       <div className="flex flex-col justify-center items-center min-w-full min-h-[70vh]">
-        <div className="flex flex-col justify-center items-center gap-4 bg-[#272525] w-[70vw] min-h-[50vh] md:w-[20vw] md:min-h-[50vh] border rounded-2xl border-red-600">
-          <div className="flex flex-col justify-center items-center min-w-[60vw] md:min-w-[15vw]">
-            <span className="text-[1.2rem] text-whiteColor mb-2 md:text-[1.3rem]">
+        <div
+          className="flex flex-col w-[80vw] min-h-[50vh] md:w-[25vw] md:min-h-[50vh] 
+                        bg-zinc/10 backdrop-blur-md border border-white/20 
+                        rounded-xl shadow-2xl justify-center items-center gap-4
+                        relative overflow-hidden"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
+
+          <div className="flex flex-col justify-center items-center min-w-[65vw] md:min-w-[20vw] relative z-10">
+            <span className="text-[1.2rem] text-white mb-2 md:text-[1.3rem] font-semibold">
               Login
             </span>
             <Field
@@ -56,7 +63,7 @@ export default function LoginPage() {
               placeholder="Digite seu login"
               onChange={(e) => setEmail(e.target.value)}
             />
-            <span className="text-[1.2rem] text-whiteColor mb-2 md:text-[1.3rem]">
+            <span className="text-[1.2rem] text-white mb-2 md:text-[1.3rem] font-semibold">
               Senha
             </span>
             <Field
@@ -65,15 +72,31 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="p-2">
-            <span className="text-[0.8rem] text-red-600">{erros}</span>
+          <div className="p-2 relative z-10">
+            <span className="text-[0.8rem] text-red-400 font-medium">{erros}</span>
           </div>
-          <div className="mt-4">
+          <div className="w-full max-w-[250px] mt-4 px-6 relative z-10">
             <button
               onClick={handleLogin}
-              className={`px-4 py-2 rounded-2xl bg-main text-white "hover:bg-red-700" w-[125px] text-[1.1rem]`}
+              className={`
+                w-full px-4 py-3 bg-white/10 backdrop-blur-sm text-white rounded-lg 
+                hover:bg-white/20 border border-white/30 hover:border-white/40
+                transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2
+                text-base font-medium shadow-lg hover:shadow-xl
+                hover:scale-[1.02] active:scale-[0.98] cursor-pointer
+              `}
             >
-              Entrar
+              <span className="flex items-center justify-center space-x-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                  />
+                </svg>
+                <span>Entrar</span>
+              </span>
             </button>
           </div>
         </div>
