@@ -2,31 +2,50 @@ import React, { useContext, useEffect, useState } from "react";
 import { getPosts, deletePost } from "../../services/postService.js";
 import { UserContext } from "../../context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
+import localCacheService from "../../services/localCacheService.js";
+import ServiceUnavailable from "../errors/ServiceUnavailable.jsx";
 
 const DashboardPostList = () => {
   const [postsData, setPostsData] = useState({ posts: [], totalPages: 1 });
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [isServiceUnavailable, setIsServiceUnavailable] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [postToDelete, setPostToDelete] = useState(null);
+  const [isUsingCache, setIsUsingCache] = useState(false);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const pageSize = 5;
 
   const fetchPosts = async (page) => {
     setLoading(true);
+    setIsServiceUnavailable(false);
+    setIsUsingCache(false);
+
     try {
       if (user && user.token) {
         const response = await getPosts(page, pageSize);
+
+        if (response.isServiceUnavailable) {
+          setIsServiceUnavailable(true);
+          setPostsData({ posts: [], totalPages: 0 });
+          return;
+        }
+
         if (response) {
           setPostsData(response);
+
+          const cacheInfo = localCacheService.getCacheInfo();
+          if (cacheInfo && cacheInfo.hasData) {
+            setIsUsingCache(!cacheInfo.isValid);
+          }
         }
       }
     } catch (error) {
-      setError("Ocorreu um erro ao buscar os posts");
+      console.error("Erro inesperado ao buscar posts:", error);
+      setIsServiceUnavailable(true);
     } finally {
       setLoading(false);
     }
@@ -75,7 +94,7 @@ const DashboardPostList = () => {
       setFeedbackMessage("Post excluído com sucesso!");
       fetchPosts(currentPage);
     } catch (error) {
-      setFeedbackMessage("Erro ao excluir post.");
+      setFeedbackMessage("Erro ao excluir post. Tente novamente.");
     } finally {
       setShowFeedbackModal(true);
       setShowConfirmModal(false);
@@ -83,14 +102,24 @@ const DashboardPostList = () => {
     }
   };
 
+  const handleRetry = () => {
+    fetchPosts(currentPage);
+  };
+
   return (
     <div className="space-y-10 min-w-[90vw] min-h-[50vh] relative xl:min-w-[50vw]">
+      {isUsingCache && (
+        <div className="w-full p-3 bg-yellow-600 text-white rounded-lg text-center">
+          <p className="text-sm">
+            ⚠️ Dados em cache local - alguns posts podem estar desatualizados
+          </p>
+        </div>
+      )}
+
       {showConfirmModal && (
         <div className="fixed inset-0 flex justify-center items-center z-50">
           <div className="bg-white rounded-lg p-8 flex flex-col items-center shadow-lg border border-gray-300">
-            <p className="mb-4 text-black">
-              Tem certeza que deseja excluir este post?
-            </p>
+            <p className="mb-4 text-black">Tem certeza que deseja excluir este post?</p>
             <div className="flex gap-4">
               <button
                 onClick={confirmDelete}
@@ -125,75 +154,91 @@ const DashboardPostList = () => {
 
       {loading ? (
         <div className="absolute inset-0 flex items-center justify-center">
-          <p className="whitespace-nowrap text-white text-lg md:text-3xl">
-            Carregando posts...
-          </p>
+          <div className="flex flex-col items-center space-y-2">
+            <p className="whitespace-nowrap text-white text-lg md:text-3xl">Carregando posts...</p>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-600"></div>
+          </div>
         </div>
       ) : (
         <>
-          <div className="flex items-center justify-center flex-col space-y-6 pb-8">
-            {error && <p className="text-red-500">{error}</p>}
-            {!loading && postsData.posts.length === 0 && (
-              <p>Nenhum post encontrado.</p>
-            )}
+          {isServiceUnavailable && (
+            <ServiceUnavailable
+              onRetry={handleRetry}
+              message="O painel administrativo está temporariamente indisponível. Verifique sua conexão e tente novamente."
+              variant="default"
+            />
+          )}
 
-            {postsData.posts.map((post) => (
-              <div
-                key={post.id}
-                className="md:w-[900px] w-[300px] border rounded-2xl border-red-600 bg-[#272525] p-4 relative transition-transform duration-300 hover:scale-105"
-              >
-                <div className="flex md:flex-row flex-col align-around justify-between">
-                  <h2 className="font-bold sm:text-xl md:text-2xl text-gray-100 hover:text-red-500 transition duration-300">
-                    {post.title}
-                  </h2>
-                  <div className="flex gap-4">
-                    <button
-                      onClick={() => handleEdit(post.id)}
-                      className="text-[#ffffff] hover:text-red-700 transition-colors font-semibold"
-                    >
-                      Editar
-                    </button>
-                    <button
-                      onClick={() => handleDelete(post.id)}
-                      className="text-[#ff4b4b] hover:text-red-700 transition-colors font-semibold"
-                    >
-                      Excluir
-                    </button>
+          {!isServiceUnavailable && (
+            <div className="flex items-center justify-center flex-col space-y-6 pb-8">
+              {postsData.posts.length === 0 && (
+                <p className="text-white">Nenhum post encontrado.</p>
+              )}
+
+              {postsData.posts.map((post) => (
+                <div
+                  key={post.id}
+                  className="md:w-[900px] w-[300px] border rounded-2xl border-red-600 bg-[#272525] p-4 relative transition-transform duration-300 hover:scale-105"
+                >
+                  <div className="flex md:flex-row flex-col align-around justify-between">
+                    <h2 className="font-bold sm:text-xl md:text-2xl text-gray-100 hover:text-red-500 transition duration-300">
+                      {post.title}
+                    </h2>
+                    <div className="flex gap-4">
+                      <button
+                        onClick={() => handleEdit(post.id)}
+                        className="text-[#ffffff] hover:text-red-700 transition-colors font-semibold"
+                        disabled={isUsingCache}
+                        title={isUsingCache ? "Edição desabilitada durante uso de cache" : ""}
+                      >
+                        Editar
+                      </button>
+                      <button
+                        onClick={() => handleDelete(post.id)}
+                        className="text-[#ff4b4b] hover:text-red-700 transition-colors font-semibold"
+                        disabled={isUsingCache}
+                        title={isUsingCache ? "Exclusão desabilitada durante uso de cache" : ""}
+                      >
+                        Excluir
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
-          <div className="flex flex-col justify-center items-center">
-            <div className="mb-5">
-              <span className="text-white">
-                Página {currentPage} de {postsData.totalPages}
-              </span>
-            </div>
-            <div className="flex items-center justify-center space-x-4">
-              <button
-                onClick={handlePreviousPage}
-                disabled={currentPage === 1}
-                className={`px-4 py-2 rounded-2xl bg-main text-white ${currentPage === 1
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-red-700"
+          {!isServiceUnavailable && postsData.posts.length > 0 && (
+            <div className="flex flex-col justify-center items-center">
+              <div className="mb-5">
+                <span className="text-white">
+                  Página {currentPage} de {postsData.totalPages}
+                </span>
+              </div>
+              <div className="flex items-center justify-center space-x-4">
+                <button
+                  onClick={handlePreviousPage}
+                  disabled={currentPage === 1}
+                  className={`px-4 py-2 rounded-2xl bg-main text-white ${
+                    currentPage === 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-red-700"
                   }`}
-              >
-                Anterior
-              </button>
-              <button
-                onClick={handleNextPage}
-                disabled={currentPage === postsData.totalPages}
-                className={`px-4 py-2 rounded-2xl bg-main text-white ${currentPage === postsData.totalPages
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-red-700"
+                >
+                  Anterior
+                </button>
+                <button
+                  onClick={handleNextPage}
+                  disabled={currentPage === postsData.totalPages}
+                  className={`px-4 py-2 rounded-2xl bg-main text-white ${
+                    currentPage === postsData.totalPages
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-red-700"
                   }`}
-              >
-                Próxima
-              </button>
+                >
+                  Próxima
+                </button>
+              </div>
             </div>
-          </div>
+          )}
         </>
       )}
     </div>

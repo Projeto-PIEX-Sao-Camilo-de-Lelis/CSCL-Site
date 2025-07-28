@@ -1,5 +1,6 @@
 import axios from "axios";
 import config from "../utils/config";
+import localCacheService from "./localCacheService.js";
 
 const postApi = axios.create({
   baseURL: config.apiUrl,
@@ -25,17 +26,51 @@ export const getPost = async (slug) => {
 };
 
 export const getPosts = async (page = 1, pageSize = 5) => {
-  const response = await postApi.get("/posts", {
-    params: {
-      pageNumber: page,
-      pageSize: pageSize,
-    },
-  });
+  const hasValidCache = localCacheService.isCacheValid();
+  const cachedData = localCacheService.getFromCache();
 
-  if (response.status !== 200) {
-    throw new Error(`Erro ao buscar posts: ${response.status}`);
+  try {
+    const response = await Promise.race([
+      postApi.get("/posts", {
+        params: {
+          pageNumber: page,
+          pageSize: pageSize,
+        },
+      }),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Timeout')), 5000)
+      )
+    ]);
+
+    if (response.status !== 200) {
+      throw new Error(`Erro ao buscar posts: ${response.status}`);
+    }
+
+    const apiData = response.data;
+    localCacheService.saveToCache(apiData);
+
+    return apiData;
+
+  } catch (error) {
+    console.log('API indisponível:', error.message);
+
+    if (hasValidCache && cachedData) {
+      console.log('Usando cache local válido como fallback');
+      return cachedData;
+    }
+
+    if (cachedData) {
+      console.log('Usando cache local expirado como último recurso');
+      return cachedData;
+    }
+
+    return {
+      isServiceUnavailable: true,
+      error: 'Serviço temporariamente indisponível. Tente novamente em alguns minutos.',
+      posts: [],
+      totalPages: 0
+    };
   }
-  return response.data;
 };
 
 export const uploadImage = async (token, file) => {
@@ -73,6 +108,8 @@ export const createBlogPost = async (token, postData) => {
       throw new Error(`Erro ao criar post: ${response.status}`);
     }
 
+    localCacheService.clearCache();
+
     return response.data;
   } catch (error) {
     console.error(`Erro ao criar post: ${error}`);
@@ -103,6 +140,9 @@ export const updatePost = async (token, id, postData) => {
     if (![200, 204].includes(response.status)) {
       throw new Error(`Erro ao atualizar post: ${response.status}`);
     }
+
+    localCacheService.clearCache();
+
     return response.data;
   } catch (error) {
     console.error(`Erro ao atualizar post: ${error}`);
@@ -120,6 +160,9 @@ export const deletePost = async (token, id) => {
     if (![200, 204].includes(response.status)) {
       throw new Error(`Erro ao excluir post: ${response.status}`);
     }
+
+    localCacheService.clearCache();
+
     return response.data;
   } catch (error) {
     console.error(`Erro ao excluir post: ${error}`);
