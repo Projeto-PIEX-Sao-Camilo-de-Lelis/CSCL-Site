@@ -12,7 +12,6 @@ export default function Menu() {
 
   const isHome = location.pathname === "/";
 
-  // Adicionar efeito de scroll no menu
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);

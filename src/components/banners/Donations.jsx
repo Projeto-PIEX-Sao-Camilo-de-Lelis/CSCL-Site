@@ -29,7 +29,7 @@ export default function Donations() {
       <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
 
-      <div className="relative z-10 container mx-auto px-6 py-12">
+      <div className="relative z-10 container mx-auto px-6 py-6">
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full mb-4">
             <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
@@ -84,9 +84,7 @@ export default function Donations() {
                     </div>
                     <div>
                       <h3 className="text-2xl font-bold">Doação via PIX</h3>
-                      <p className="text-white/80">
-                        Digite a chave abaixo ou escaneie o QR ao lado
-                      </p>
+                      <p className="text-white/80">Doe através da chave PIX</p>
                     </div>
                   </div>
 
@@ -94,7 +92,7 @@ export default function Donations() {
                     <div className="bg-white/5 rounded-lg p-4">
                       <label className="text-sm text-white/70 block mb-2">Chave PIX (CNPJ)</label>
                       <div className="flex items-center justify-between bg-white/10 rounded-lg p-3">
-                        <span className="font-mono text-lg">{bankInfo.chavePix}</span>
+                        <span className="font-mono sm:text-sm text-lg">{bankInfo.chavePix}</span>
                         <button
                           onClick={() => copyToClipboard(bankInfo.chavePix, "pix")}
                           className="flex items-center gap-2 bg-green-500 hover:bg-green-600 px-3 py-2 rounded-lg transition-colors duration-300"
