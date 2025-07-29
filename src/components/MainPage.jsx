@@ -13,7 +13,7 @@ export default function MainPage() {
       <Menu />
       <SideMenu />
 
-      <div className="pt-16 lg:pt-20">
+      <div className="pt-16 lg:pt-20" id="donations">
         <Donations />
       </div>
 

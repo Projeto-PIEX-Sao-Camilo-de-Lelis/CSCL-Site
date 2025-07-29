@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 
@@ -9,6 +9,30 @@ export default function HamburgerMenu() {
   const location = useLocation();
 
   const isHome = location.pathname === "/";
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleEscapeKey = (event) => {
+      if (event.key === "Escape" && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("keydown", handleEscapeKey);
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEscapeKey);
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
 
   const handleNavigate = (path) => {
     navigate(path);
@@ -23,11 +47,36 @@ export default function HamburgerMenu() {
     setIsOpen(false);
   };
 
+  const handleDonationClick = () => {
+    if (isHome) {
+      const donationsSection = document.getElementById("donations");
+      if (donationsSection) {
+        donationsSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    } else {
+      navigate("/#donations");
+    }
+    setIsOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setIsOpen(false);
+  };
+
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
   return (
     <div className="md:hidden relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="relative z-[60] p-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/30"
+        aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
       >
         {isOpen ? (
           <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -53,7 +102,8 @@ export default function HamburgerMenu() {
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[55]"
-          onClick={() => setIsOpen(false)}
+          onClick={closeMenu}
+          aria-label="Fechar menu"
         />
       )}
 
@@ -75,8 +125,9 @@ export default function HamburgerMenu() {
             </div>
 
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={closeMenu}
               className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300"
+              aria-label="Fechar menu"
             >
               <svg
                 className="w-5 h-5 text-white"
@@ -177,16 +228,13 @@ export default function HamburgerMenu() {
                           />
                         </svg>
                       </div>
-                      <Link to="/dashboard" className="flex items-center gap-1">
+                      <Link to="/dashboard" onClick={closeMenu} className="flex items-center gap-1">
                         <span className="text-gray-300 text-sm font-medium">Logado como Admin</span>
                       </Link>
                     </div>
 
                     <button
-                      onClick={() => {
-                        logout();
-                        setIsOpen(false);
-                      }}
+                      onClick={handleLogout}
                       className="w-full flex items-center justify-center gap-2 p-3 text-gray-400 hover:text-white bg-zinc-800/80 hover:bg-zinc-700/80 rounded-lg transition-all duration-300"
                     >
                       <svg
@@ -221,23 +269,6 @@ export default function HamburgerMenu() {
                     <span className="font-medium">Login</span>
                   </button>
                 )}
-
-                <div className="pt-4">
-                  <button
-                    onClick={() => handleAnchorClick("#donations")}
-                    className="w-full flex items-center justify-center gap-2 p-4 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl font-bold hover:from-red-500 hover:to-red-400 transform hover:scale-105 transition-all duration-300"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                      />
-                    </svg>
-                    DOAR
-                  </button>
-                </div>
               </>
             ) : (
               <>
@@ -312,16 +343,13 @@ export default function HamburgerMenu() {
                           />
                         </svg>
                       </div>
-                      <Link to="/dashboard" className="flex items-center gap-1">
+                      <Link to="/dashboard" onClick={closeMenu} className="flex items-center gap-1">
                         <span className="text-gray-300 text-sm font-medium">Logado como Admin</span>
                       </Link>
                     </div>
 
                     <button
-                      onClick={() => {
-                        logout();
-                        setIsOpen(false);
-                      }}
+                      onClick={handleLogout}
                       className="w-full flex items-center justify-center gap-2 p-3 text-gray-400 hover:text-white bg-zinc-800/80 hover:bg-zinc-700/80 rounded-lg transition-all duration-300"
                     >
                       <svg
@@ -358,6 +386,23 @@ export default function HamburgerMenu() {
                 )}
               </>
             )}
+
+            <div className="pt-4">
+              <button
+                onClick={handleDonationClick}
+                className="w-full flex items-center justify-center gap-2 p-4 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl font-bold hover:from-red-500 hover:to-red-400 transform hover:scale-105 transition-all duration-300"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                  />
+                </svg>
+                DOAR
+              </button>
+            </div>
           </div>
         </div>
       )}

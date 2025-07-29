@@ -20,6 +20,19 @@ export default function Menu() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleDonationClick = (e) => {
+    if (isHome) {
+      e.preventDefault();
+      const donationsSection = document.getElementById("donations");
+      if (donationsSection) {
+        donationsSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }
+  };
+
   return (
     <header
       className={`
@@ -40,13 +53,13 @@ export default function Menu() {
                 <img
                   src="/assets/icons/logo4.png"
                   alt="Logo da Casa São Camilo de Lelis"
-                  className="w-6 h-6 lg:w-8 lg:h-8 object-contain"
+                  className="w-12 h-12 lg:w-14 lg:h-14 object-cover"
                 />
               </div>
             </div>
 
             <div className="hidden sm:block">
-              <h1 className="text-white font-bold text-lg lg:text-xl group-hover:text-yellow-400 transition-colors duration-300">
+              <h1 className="text-white font-bold text-lg lg:text-xl group-hover:text-red-400 transition-colors duration-300">
                 Casa São Camilo
               </h1>
               <p className="text-gray-400 text-xs lg:text-sm font-medium">de Lelis</p>
@@ -85,21 +98,6 @@ export default function Menu() {
                   >
                     Histórias
                   </a>
-
-                  <a
-                    href="#donations"
-                    className="ml-2 lg:ml-4 px-4 lg:px-6 py-2 lg:py-3 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl text-sm lg:text-base font-bold hover:from-red-500 hover:to-red-400 transform hover:scale-105 hover:shadow-xl transition-all duration-300 flex items-center gap-2"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                      />
-                    </svg>
-                    DOAR
-                  </a>
                 </>
               ) : (
                 <>
@@ -130,6 +128,22 @@ export default function Menu() {
                   Dashboard
                 </Link>
               )}
+
+              <Link
+                to="/#donations"
+                onClick={handleDonationClick}
+                className="ml-2 lg:ml-4 px-4 lg:px-6 py-2 lg:py-3 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-xl text-sm lg:text-base font-bold hover:from-red-500 hover:to-red-400 transform hover:scale-105 hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                  />
+                </svg>
+                DOAR
+              </Link>
             </div>
 
             <div className="ml-4 lg:ml-6 flex items-center gap-2">

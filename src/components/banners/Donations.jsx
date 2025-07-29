@@ -29,7 +29,7 @@ export default function Donations() {
       <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
 
-      <div className="relative z-10 container mx-auto px-6 py-6">
+      <div className="relative z-10 container mx-auto px-6 py-16">
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full mb-4">
             <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
