@@ -70,7 +70,7 @@ export default function ViewPostPage() {
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
 
         <div className="relative z-10 container mx-auto px-6 py-12">
-          <div className="flex items-center gap-4 mb-8">
+          <div className="flex items-center justify-between mb-8">
             <button
               onClick={() => navigate(-1)}
               className="group flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl text-white hover:bg-white/20 transition-all duration-300"
@@ -78,11 +78,11 @@ export default function ViewPostPage() {
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
               <span className="hidden sm:inline">Voltar</span>
             </button>
-
             <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full">
               <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
-              <span className="text-sm font-medium">LEITURA</span>
+              <span className="text-sm font-medium">VISUALIZAR POSTAGEM</span>
             </div>
+            <div className="w-20"></div>
           </div>
 
           {!loading && post && (

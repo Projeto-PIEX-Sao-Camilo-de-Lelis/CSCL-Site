@@ -189,16 +189,19 @@ export default function Footer() {
                 &copy; 2025 Casa São Camilo de Lelis, Juiz de Fora.
               </p>
               <p className="text-gray-400 text-xs mt-1">Todos os direitos reservados.</p>
+              <p className="text-gray-400 text-xs mt-1">
+                CNPJ: <span className="font-mono">17.143.512/0001-00</span>
+              </p>
             </div>
 
             <Link
               to="https://github.com/Projeto-PIEX-Sao-Camilo-de-Lelis"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 px-4 py-2 bg-zinc-800/50 border border-zinc-700/50 rounded-lg hover:border-yellow-400/50 transition-all duration-300"
+              className="group flex items-center gap-2 px-4 py-2 bg-zinc-800/50 border border-zinc-700/50 rounded-lg hover:border-blue-400/50 transition-all duration-300"
             >
               <svg
-                className="w-4 h-4 text-gray-400 group-hover:text-yellow-400 transition-colors"
+                className="w-4 h-4 text-gray-400 group-hover:text-blue-400 transition-colors"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -210,7 +213,7 @@ export default function Footer() {
               </svg>
               <div className="text-left">
                 <p className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">
-                  Desenvolvido no <span className="text-yellow-400 font-bold">PIEX</span>
+                  Desenvolvido no <span className="text-blue-400 font-bold">PIEX</span>
                 </p>
                 <p className="text-xs text-gray-400">Instituto Vianna Júnior</p>
               </div>
