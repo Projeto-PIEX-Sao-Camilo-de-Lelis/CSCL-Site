@@ -151,7 +151,9 @@ export default function Menu() {
                         />
                       </svg>
                     </div>
-                    <span className="text-gray-300 text-sm font-medium">Logado</span>
+                    <Link to="/dashboard" className="flex items-center gap-1">
+                      <span className="text-gray-300 text-sm font-medium">Logado</span>
+                    </Link>
                   </div>
                   <button
                     onClick={logout}

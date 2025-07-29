@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 export default function HamburgerMenu() {
   const { user, logout } = useContext(UserContext);
@@ -177,7 +177,9 @@ export default function HamburgerMenu() {
                           />
                         </svg>
                       </div>
-                      <span className="text-gray-300 text-sm font-medium">Logado como Admin</span>
+                      <Link to="/dashboard" className="flex items-center gap-1">
+                        <span className="text-gray-300 text-sm font-medium">Logado como Admin</span>
+                      </Link>
                     </div>
 
                     <button
@@ -310,7 +312,9 @@ export default function HamburgerMenu() {
                           />
                         </svg>
                       </div>
-                      <span className="text-gray-300 text-sm font-medium">Logado como Admin</span>
+                      <Link to="/dashboard" className="flex items-center gap-1">
+                        <span className="text-gray-300 text-sm font-medium">Logado como Admin</span>
+                      </Link>
                     </div>
 
                     <button
@@ -354,13 +358,6 @@ export default function HamburgerMenu() {
                 )}
               </>
             )}
-          </div>
-
-          <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-zinc-700/50 bg-zinc-900">
-            <div className="text-center">
-              <p className="text-gray-400 text-xs">© 2025 Casa São Camilo de Lelis</p>
-              <p className="text-gray-500 text-xs mt-1">Juiz de Fora - MG</p>
-            </div>
           </div>
         </div>
       )}
