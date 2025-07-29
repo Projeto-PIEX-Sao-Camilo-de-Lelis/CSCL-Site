@@ -12,7 +12,11 @@ export default function MainPage() {
     <div className="flex flex-col w-full h-full overflow-x-hidden md:text-2x1 overflow-hidden">
       <Menu />
       <SideMenu />
-      <Donations />
+
+      <div className="pt-16 lg:pt-20">
+        <Donations />
+      </div>
+
       <About />
       <InstitutionalValues />
       <Cards />

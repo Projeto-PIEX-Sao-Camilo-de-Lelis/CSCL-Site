@@ -58,3 +58,13 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+html {
+  scroll-padding-top: 5rem;
+}
+
+@media (max-width: 1024px) {
+  html {
+    scroll-padding-top: 4rem;
+  }
+}

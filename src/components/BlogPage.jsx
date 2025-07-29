@@ -7,11 +7,12 @@ export default function BlogPage() {
     <div className="min-h-screen flex flex-col w-full overflow-x-hidden bg-secondary">
       <Menu />
 
-      <div className="relative w-full bg-gradient-to-br from-main via-main/95 to-red-800 text-whiteColor overflow-hidden">
+      <div className="relative w-full bg-gradient-to-br from-main via-main/95 to-red-800 text-whiteColor overflow-hidden pt-16 lg:pt-20">
         <div className="absolute inset-0 bg-[url('/assets/patterns/dots.svg')] opacity-10"></div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
-        <div className="relative z-10 container mx-auto px-6 py-6">
+
+        <div className="relative z-10 container mx-auto px-6 py-16">
           <div className="text-center">
             <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full mb-6">
               <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
@@ -28,7 +29,8 @@ export default function BlogPage() {
             </p>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-secondary via-secondary/80 to-transparent"></div>
+
+        <div className="absolute bottom-0 left-0 right-0 h-8 bg-secondary transform -skew-y-1 origin-bottom-left"></div>
       </div>
 
       <div className="flex-1 bg-secondary">
