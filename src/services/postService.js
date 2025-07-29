@@ -13,7 +13,7 @@ const postApi = axios.create({
 export const getPost = async (slug) => {
   try {
     const response = await postApi.get(`/posts/slug/${slug}`);
-    console.log(response);
+
     if (response.status !== 200) {
       throw new Error(`Erro na requisição: ${response.status}`);
     }
