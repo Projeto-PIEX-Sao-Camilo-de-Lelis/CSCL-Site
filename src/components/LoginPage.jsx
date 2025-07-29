@@ -197,7 +197,7 @@ export default function LoginPage() {
                     onClick={() => navigate("/")}
                     className="text-gray-400 hover:text-white text-sm font-medium transition-colors duration-300"
                   >
-                    ← Voltar para o site
+                    ← Voltar para a Home
                   </button>
                 </div>
               </div>
