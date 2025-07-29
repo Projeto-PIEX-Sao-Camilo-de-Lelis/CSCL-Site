@@ -117,7 +117,7 @@ const PostList = () => {
               <article
                 key={post.id}
                 className={`
-                group w-[80vw] border rounded-2xl border-red-600/30 bg-gradient-to-br 
+                group w-[70vw] border rounded-2xl border-red-600/30 bg-gradient-to-br 
                 from-[#272525] to-[#1a1818] p-6 relative transition-all duration-500 
                 hover:scale-[1.02] hover:shadow-2xl hover:border-red-600/60
                 hover:-translate-y-2 hover:z-10
