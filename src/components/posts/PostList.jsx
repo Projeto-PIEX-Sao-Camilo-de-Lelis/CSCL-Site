@@ -1,8 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getPosts } from "../../services/postService.js";
-import { UserContext } from "../../context/UserContext.jsx";
 import { Link } from "react-router-dom";
-import localCacheService from "../../services/localCacheService.js";
 import ServiceUnavailable from "../errors/ServiceUnavailable.jsx";
 
 const PostList = () => {
@@ -10,14 +8,12 @@ const PostList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [isServiceUnavailable, setIsServiceUnavailable] = useState(false);
-  const [isUsingCache, setIsUsingCache] = useState(false);
 
   const pageSize = 6;
 
   const fetchPosts = async (page) => {
     setLoading(true);
     setIsServiceUnavailable(false);
-    setIsUsingCache(false);
 
     try {
       const response = await getPosts(page, pageSize);
@@ -29,11 +25,6 @@ const PostList = () => {
       }
 
       setPostsData(response);
-
-      const cacheInfo = localCacheService.getCacheInfo();
-      if (cacheInfo && cacheInfo.hasData) {
-        setIsUsingCache(!cacheInfo.isValid);
-      }
     } catch (error) {
       console.error("Erro inesperado ao buscar posts:", error);
       setIsServiceUnavailable(true);
@@ -66,22 +57,6 @@ const PostList = () => {
 
   return (
     <div className="w-full min-h-[60vh]">
-      {isUsingCache && (
-        <div className="mb-6 p-4 bg-gradient-to-r from-yellow-600/20 to-yellow-500/20 border border-yellow-500/30 rounded-xl backdrop-blur-sm">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-yellow-500/20 rounded-full flex items-center justify-center">
-              <span className="text-yellow-400 text-lg">📄</span>
-            </div>
-            <div>
-              <p className="text-yellow-100 font-medium">Modo Offline Ativo</p>
-              <p className="text-yellow-200/80 text-sm">
-                Exibindo dados salvos localmente. Alguns posts podem estar desatualizados.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
       {loading && (
         <div className="flex flex-col items-center justify-center min-h-[40vh] space-y-4">
           <div className="relative">
@@ -93,7 +68,7 @@ const PostList = () => {
       )}
 
       {isServiceUnavailable && !loading && (
-        <div className="min-h-[40vh]  flex items-center justify-center">
+        <div className="min-h-[40vh] flex items-center justify-center">
           <ServiceUnavailable onRetry={handleRetry} variant="default" />
         </div>
       )}

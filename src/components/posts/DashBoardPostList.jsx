@@ -2,9 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { getPosts, deletePost } from "../../services/postService.js";
 import { UserContext } from "../../context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
-import localCacheService from "../../services/localCacheService.js";
 import ServiceUnavailable from "../errors/ServiceUnavailable.jsx";
-import { Edit3, Trash2, Calendar, AlertTriangle, X, Check } from "lucide-react";
+import { Edit3, Trash2, Calendar, X, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const DashboardPostList = () => {
@@ -16,7 +15,6 @@ const DashboardPostList = () => {
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [postToDelete, setPostToDelete] = useState(null);
-  const [isUsingCache, setIsUsingCache] = useState(false);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const pageSize = 5;
@@ -24,7 +22,6 @@ const DashboardPostList = () => {
   const fetchPosts = async (page) => {
     setLoading(true);
     setIsServiceUnavailable(false);
-    setIsUsingCache(false);
 
     try {
       if (user && user.token) {
@@ -38,11 +35,6 @@ const DashboardPostList = () => {
 
         if (response) {
           setPostsData(response);
-
-          const cacheInfo = localCacheService.getCacheInfo();
-          if (cacheInfo && cacheInfo.hasData) {
-            setIsUsingCache(!cacheInfo.isValid);
-          }
         }
       }
     } catch (error) {
@@ -118,17 +110,6 @@ const DashboardPostList = () => {
 
   return (
     <div className="space-y-8 w-full relative">
-      {isUsingCache && (
-        <div className="w-full p-4 bg-gradient-to-r from-yellow-600/20 to-yellow-500/20 border border-yellow-500/30 rounded-xl">
-          <div className="flex items-center gap-3">
-            <AlertTriangle className="w-5 h-5 text-yellow-400" />
-            <p className="text-sm text-yellow-200">
-              Dados em cache local - alguns posts podem estar desatualizados
-            </p>
-          </div>
-        </div>
-      )}
-
       {showConfirmModal && (
         <div className="fixed inset-0 flex justify-center items-center z-50 bg-black/80 backdrop-blur-sm">
           <div className="bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700 rounded-2xl p-8 shadow-2xl max-w-md w-full mx-4">
@@ -232,13 +213,8 @@ const DashboardPostList = () => {
                       <div className="flex items-center gap-3">
                         <button
                           onClick={() => handleEdit(post.id)}
-                          disabled={isUsingCache}
-                          className="group/btn flex items-center gap-2 px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg font-medium hover:bg-blue-500/30 hover:text-blue-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
-                          title={
-                            isUsingCache
-                              ? "Edição desabilitada durante uso de cache"
-                              : "Editar post"
-                          }
+                          className="group/btn flex items-center gap-2 px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg font-medium hover:bg-blue-500/30 hover:text-blue-300 transition-all duration-300"
+                          title="Editar post"
                         >
                           <Edit3 className="w-4 h-4 group-hover/btn:scale-110 transition-transform duration-300" />
                           <span className="hidden sm:inline">Editar</span>
@@ -246,13 +222,8 @@ const DashboardPostList = () => {
 
                         <button
                           onClick={() => handleDelete(post.id)}
-                          disabled={isUsingCache}
-                          className="group/btn flex items-center gap-2 px-4 py-2 bg-red-500/20 text-red-400 rounded-lg font-medium hover:bg-red-500/30 hover:text-red-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
-                          title={
-                            isUsingCache
-                              ? "Exclusão desabilitada durante uso de cache"
-                              : "Excluir post"
-                          }
+                          className="group/btn flex items-center gap-2 px-4 py-2 bg-red-500/20 text-red-400 rounded-lg font-medium hover:bg-red-500/30 hover:text-red-300 transition-all duration-300"
+                          title="Excluir post"
                         >
                           <Trash2 className="w-4 h-4 group-hover/btn:scale-110 transition-transform duration-300" />
                           <span className="hidden sm:inline">Excluir</span>
